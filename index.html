@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>VanBerto's — União Europeia 🇪🇺</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{width:100%;min-height:100%;}
+body{
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:clamp(10px,3vw,24px) clamp(8px,3vw,16px);
+  min-height:100vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:
+    radial-gradient(ellipse at 20% 30%,rgba(0,50,180,0.42) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 70%,rgba(0,20,140,0.32) 0%,transparent 55%),
+    radial-gradient(ellipse at 55% 10%,rgba(180,150,0,0.14) 0%,transparent 45%),
+    linear-gradient(160deg,#02040f 0%,#04061a 40%,#060418 100%);
+  animation:bgPulse 8s ease-in-out infinite alternate;
+}
+@keyframes bgPulse{0%{filter:hue-rotate(0deg) brightness(1);}100%{filter:hue-rotate(12deg) brightness(1.06);}}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 5% 8%,rgba(255,255,255,0.9),transparent),
+    radial-gradient(1px 1px at 14% 55%,rgba(255,255,200,0.7),transparent),
+    radial-gradient(2px 2px at 22% 20%,rgba(255,255,255,0.8),transparent),
+    radial-gradient(1px 1px at 33% 78%,rgba(200,220,255,0.7),transparent),
+    radial-gradient(1.5px 1.5px at 41% 38%,rgba(255,255,255,0.85),transparent),
+    radial-gradient(1px 1px at 50% 62%,rgba(255,230,150,0.7),transparent),
+    radial-gradient(2px 2px at 58% 12%,rgba(255,255,255,0.6),transparent),
+    radial-gradient(1px 1px at 66% 88%,rgba(200,255,220,0.65),transparent),
+    radial-gradient(1.5px 1.5px at 74% 32%,rgba(255,255,255,0.75),transparent),
+    radial-gradient(1px 1px at 82% 68%,rgba(255,220,180,0.6),transparent),
+    radial-gradient(1.5px 1.5px at 90% 15%,rgba(255,255,255,0.9),transparent),
+    radial-gradient(1px 1px at 95% 50%,rgba(200,220,255,0.7),transparent);
+  animation:starsTwinkle 4s ease-in-out infinite alternate;
+}
+@keyframes starsTwinkle{0%{opacity:0.5;}50%{opacity:1;}100%{opacity:0.65;}}
+
+/* Estrelas UE flutuantes */
+.eu-star{position:fixed;font-size:11px;opacity:0;color:#FFD600;animation:euStarFloat linear infinite;pointer-events:none;}
+@media(max-width:360px){.eu-star{display:none;}}
+@keyframes euStarFloat{
+  0%{transform:translateY(0) rotate(0deg);opacity:0;}
+  10%{opacity:0.45;}90%{opacity:0.15;}
+  100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}
+}
+
+/* ── WRAP & CARD ── */
+.modal-wrap{position:relative;z-index:1;width:min(680px,100%);margin:auto 0;}
+.card{
+  background:linear-gradient(155deg,#0d1840,#080e2e);
+  border:2px solid rgba(255,215,0,0.32);
+  border-radius:clamp(16px,4vw,28px);overflow:hidden;
+  box-shadow:0 0 100px rgba(0,60,255,0.20),0 0 50px rgba(255,160,0,0.12),inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+/* ── HERO ── */
+.modal-hero{
+  background:linear-gradient(160deg,#0a1030,#060c28);
+  padding:clamp(12px,3.5vw,20px) clamp(12px,4vw,24px) clamp(8px,2.5vw,14px);
+  text-align:center;position:relative;overflow:hidden;
+}
+/* Silhueta Europa no fundo do hero */
+.modal-hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 60% 25%,rgba(255,200,0,0.13),transparent 65%),
+    radial-gradient(ellipse at 20% 80%,rgba(0,80,255,0.16),transparent 60%),
+    radial-gradient(ellipse at 85% 75%,rgba(0,150,255,0.08),transparent 55%);
+}
+.hero-map{
+  position:absolute;inset:0;pointer-events:none;
+  overflow:hidden;
+}
+#heroMapSvg{width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease;}
+.modal-hero::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 20%,rgba(255,255,255,0.8),transparent),
+    radial-gradient(1px 1px at 30% 60%,rgba(255,255,200,0.6),transparent),
+    radial-gradient(2px 2px at 50% 12%,rgba(255,255,255,0.75),transparent),
+    radial-gradient(1px 1px at 70% 40%,rgba(200,220,255,0.6),transparent),
+    radial-gradient(1.5px 1.5px at 88% 18%,rgba(255,255,255,0.8),transparent);
+  animation:starsTwinkle 4s ease-in-out infinite alternate;
+}
+
+/* ── EU ICON (12 estrelas perfeitas) ── */
+.eu-icon{
+  position:relative;z-index:1;
+  width:clamp(52px,13vw,68px);height:clamp(52px,13vw,68px);
+  margin:0 auto 10px;
+  animation:euPulse 3s ease-in-out infinite;
+}
+.eu-icon svg{width:100%;height:100%;}
+@keyframes euPulse{
+  0%,100%{box-shadow:none;filter:drop-shadow(0 0 6px rgba(255,214,0,0.40));}
+  50%{filter:drop-shadow(0 0 14px rgba(255,214,0,0.75));}
+}
+
+.modal-title{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(18px,5vw,32px);color:#FFD600;
+  text-shadow:0 0 30px rgba(255,214,0,0.55),0 4px 0 rgba(0,0,0,0.4);
+  margin-bottom:2px;position:relative;z-index:1;line-height:1.1;
+}
+.modal-sub{
+  color:rgba(255,255,255,0.42);font-size:clamp(8px,2vw,10px);
+  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:clamp(6px,2vw,10px);position:relative;z-index:1;
+}
+
+/* ── MINI STATS ── */
+.hero-stats{
+  display:flex;align-items:center;justify-content:center;
+  gap:clamp(6px,2vw,12px);flex-wrap:wrap;
+  margin-bottom:clamp(8px,2.5vw,12px);position:relative;z-index:1;
+}
+.stat-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(255,215,0,0.08);
+  border:1px solid rgba(255,215,0,0.22);
+  border-radius:20px;padding:3px 10px;
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(8px,2vw,10px);color:rgba(255,215,0,0.80);
+  letter-spacing:0.3px;white-space:nowrap;
+}
+
+/* VanBerto */
+.modal-vb{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 0 4px;position:relative;z-index:1;}
+.modal-vb-robot{width:clamp(44px,11vw,64px);flex-shrink:0;animation:vbFloat 3s ease-in-out infinite;filter:drop-shadow(0 6px 18px rgba(255,214,0,0.20));}
+.modal-vb-balloon{
+  background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,215,0,0.28);
+  border-radius:16px;padding:7px 12px;font-family:'Fredoka One',cursive;color:#FFD600;
+  font-size:clamp(10px,2.6vw,13px);text-align:left;position:relative;
+  max-width:min(230px,57vw);line-height:1.5;transition:opacity 0.4s;
+}
+.modal-vb-balloon::before{
+  content:'';position:absolute;left:-10px;top:14px;
+  border-top:7px solid transparent;border-bottom:7px solid transparent;
+  border-right:11px solid rgba(255,215,0,0.25);
+}
+@keyframes vbFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+@keyframes vbBlink{0%,92%,100%{transform:scaleY(0);}95%{transform:scaleY(1);}}
+@keyframes waveVB{0%{transform:rotate(0deg);}25%{transform:rotate(-18deg);}50%{transform:rotate(0deg);}75%{transform:rotate(-18deg);}100%{transform:rotate(0deg);}}
+
+/* ── GAMES SECTION ── */
+.games-section{padding:clamp(4px,1vw,6px) clamp(10px,3vw,16px) clamp(10px,3vw,16px);}
+
+/* Section divider com estrelinhas UE */
+.section-divider{
+  font-family:'Fredoka One',cursive;color:rgba(255,215,0,0.60);
+  font-size:clamp(9px,2.3vw,11px);letter-spacing:1.5px;text-transform:uppercase;
+  margin:clamp(8px,2vw,12px) 0 clamp(6px,2vw,10px);
+  display:flex;align-items:center;gap:8px;
+}
+.section-divider:first-child{margin-top:2px;}
+.section-divider::after{
+  content:'★ ★ ★';flex:1;
+  font-size:7px;letter-spacing:4px;
+  color:rgba(255,215,0,0.18);
+  text-align:center;overflow:hidden;
+  display:flex;align-items:center;
+  padding-left:6px;
+}
+.section-count{
+  font-family:'Fredoka One',cursive;font-size:9px;letter-spacing:1px;
+  background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.20);
+  border-radius:20px;padding:2px 8px;color:rgba(255,215,0,0.48);white-space:nowrap;
+}
+
+.games-grid{display:grid;gap:clamp(5px,1.5vw,8px);}
+.games-grid-1{grid-template-columns:1fr;}
+.games-grid-2{grid-template-columns:repeat(2,1fr);}
+.games-grid-3{grid-template-columns:repeat(3,1fr);}
+
+@media(max-width:340px){
+  .games-grid-2,.games-grid-3{grid-template-columns:1fr;}
+  .destaque-sub{grid-template-columns:1fr;}
+  .game-card.pintar{flex-direction:column;text-align:center;}
+  .game-card.pintar .game-tag{align-self:center;}
+}
+@media(min-width:341px) and (max-width:480px){
+  .games-grid-3{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:480px){
+  .modal-title{font-size:clamp(15px,5.5vw,22px);}
+}
+
+/* ── GAME CARD ── */
+.game-card{
+  background:rgba(0,51,153,0.10);
+  border:1.5px solid rgba(255,215,0,0.12);
+  border-radius:clamp(12px,3.5vw,16px);
+  padding:clamp(10px,3vw,14px) clamp(6px,2vw,10px) clamp(8px,2.5vw,12px);
+  text-align:center;cursor:pointer;text-decoration:none;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  transition:transform 0.22s cubic-bezier(.34,1.56,.64,1),border-color 0.2s,box-shadow 0.2s;
+  position:relative;overflow:hidden;
+}
+.game-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--gc);opacity:0;transition:opacity 0.2s;}
+.game-card:hover{transform:translateY(-4px) scale(1.02);border-color:var(--gc);box-shadow:0 8px 24px var(--gc-glow);}
+.game-card:hover::before{opacity:0.09;}
+.game-card:hover .game-emoji{transform:scale(1.18) rotate(-4deg);}
+
+.game-emoji{
+  font-size:clamp(28px,7.5vw,38px);line-height:1;
+  transition:transform 0.22s cubic-bezier(.34,1.56,.64,1);
+  filter:drop-shadow(0 3px 8px rgba(0,0,0,0.4));
+}
+.game-name{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(10px,2.6vw,12px);color:rgba(255,255,255,0.90);line-height:1.2;
+}
+.game-tag{
+  display:inline-block;background:var(--gc);color:#fff;
+  font-size:clamp(7px,1.8vw,9px);font-weight:900;letter-spacing:0.5px;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;box-shadow:0 2px 8px var(--gc-glow);margin-top:1px;
+}
+.game-tag.gold{background:rgba(255,214,0,0.14);color:#FFD600;border:1px solid rgba(255,214,0,0.38);box-shadow:0 2px 10px rgba(255,214,0,0.22);}
+.game-tag.dark{color:#0d1a00;}
+
+/* pintar card */
+.game-card.pintar{flex-direction:row;gap:clamp(10px,3vw,16px);padding:clamp(8px,2.5vw,14px) clamp(12px,3.5vw,18px);justify-content:flex-start;text-align:left;}
+.game-card.pintar .game-info{display:flex;flex-direction:column;gap:3px;flex:1;}
+.destaque-sub .game-card .game-name{color:#ffffff !important;}
+.destaque-sub .game-card .game-desc{color:rgba(255,255,255,0.78) !important;}
+.game-card.pintar .game-desc{font-size:clamp(9px,2.3vw,11px);color:rgba(255,255,255,0.42);font-family:'Nunito',sans-serif;font-weight:700;line-height:1.4;}
+.game-card.pintar .game-tag{align-self:flex-start;}
+.game-card.pintar .game-emoji{font-size:clamp(28px,7.5vw,38px);}
+.game-card.pintar .game-name{font-size:clamp(12px,3.5vw,16px);}
+
+/* ── COMBOIO CARD ── */
+.game-card.comboio{flex-direction:column;padding:0;overflow:hidden;gap:0;text-align:left;}
+.train-canvas{width:100%;height:auto;display:block;background:linear-gradient(180deg,#060c28 0%,#0a1540 100%);}
+.comboio-info{display:flex;flex-direction:column;gap:5px;padding:clamp(10px,3vw,14px) clamp(12px,3.5vw,18px);flex:1;}
+.comboio-info .game-desc{font-size:clamp(9px,2.3vw,11px);color:rgba(255,255,255,0.45);font-family:'Nunito',sans-serif;font-weight:700;line-height:1.4;}
+
+
+/* ── CARD ICONS (SVG) ── */
+.card-icon{
+  width:clamp(38px,9vw,52px);
+  height:clamp(38px,9vw,52px);
+  flex-shrink:0;
+  filter:drop-shadow(0 3px 10px rgba(0,0,0,0.45));
+  transition:transform 0.22s cubic-bezier(.34,1.56,.64,1);
+}
+.game-icon{
+  display:flex;align-items:center;justify-content:center;
+  line-height:1;
+}
+.game-card:hover .card-icon{transform:scale(1.15) rotate(-4deg);}
+.game-card.pintar .card-icon{width:clamp(32px,8vw,44px);height:clamp(32px,8vw,44px);}
+
+/* ── FOOTER ── */
+.modal-footer{
+  background:rgba(0,0,0,0.28);border-top:1px solid rgba(255,215,0,0.10);
+  padding:clamp(9px,2.5vw,12px) clamp(12px,4vw,22px);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-credit{font-family:'Fredoka One',cursive;color:rgba(255,255,255,0.28);font-size:clamp(9px,2.3vw,12px);letter-spacing:0.3px;}
+.footer-eu{font-size:clamp(15px,3.5vw,19px);animation:vbFloat 2.5s ease-in-out infinite;}
+
+@supports(padding-bottom:env(safe-area-inset-bottom)){body{padding-bottom:max(clamp(10px,3vw,24px),env(safe-area-inset-bottom));}}
+@media(max-height:560px){
+  .eu-icon{display:none;}
+  .hero-stats{display:none;}
+  .modal-hero{padding:8px 14px 8px;}
+  .modal-vb-robot{width:36px;}
+}
+</style>
+</head>
+<body>
+
+<div class="eu-star" style="left:8%;animation-duration:12s;animation-delay:0s;">★</div>
+<div class="eu-star" style="left:22%;animation-duration:18s;animation-delay:3s;">★</div>
+<div class="eu-star" style="left:38%;animation-duration:14s;animation-delay:6s;font-size:8px;">★</div>
+<div class="eu-star" style="left:55%;animation-duration:20s;animation-delay:1s;">★</div>
+<div class="eu-star" style="left:70%;animation-duration:16s;animation-delay:9s;font-size:9px;">★</div>
+<div class="eu-star" style="left:85%;animation-duration:11s;animation-delay:4s;">★</div>
+
+<div class="modal-wrap">
+  <div class="card">
+
+    <!-- HERO -->
+    <div class="modal-hero">
+
+      <!-- Mapa Europa real (D3 + Natural Earth) -->
+      <div class="hero-map">
+        <svg id="heroMapSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+
+      <!-- EU Icon — 12 estrelas com trigonometria perfeita -->
+      <div class="eu-icon">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="euBg" cx="50%" cy="40%" r="55%">
+              <stop offset="0%" stop-color="#0a3cba"/>
+              <stop offset="100%" stop-color="#002080"/>
+            </radialGradient>
+          </defs>
+          <!-- Fundo circular azul UE -->
+          <circle cx="30" cy="30" r="29" fill="url(#euBg)"/>
+          <!-- Anel dourado externo -->
+          <circle cx="30" cy="30" r="28.5" fill="none" stroke="#FFD600" stroke-width="1.2" stroke-opacity="0.7"/>
+          <!-- Anel dourado interno subtil -->
+          <circle cx="30" cy="30" r="24" fill="none" stroke="#FFD600" stroke-width="0.4" stroke-opacity="0.3"/>
+          <!-- 12 estrelas calculadas com trigonometria (r=19px do centro) -->
+          <g fill="#FFD600" font-size="6.2" text-anchor="middle" dominant-baseline="central" font-family="serif">
+    <text x="30.0" y="8.0">★</text>
+    <text x="41.0" y="10.9">★</text>
+    <text x="49.1" y="19.0">★</text>
+    <text x="52.0" y="30.0">★</text>
+    <text x="49.1" y="41.0">★</text>
+    <text x="41.0" y="49.1">★</text>
+    <text x="30.0" y="52.0">★</text>
+    <text x="19.0" y="49.1">★</text>
+    <text x="10.9" y="41.0">★</text>
+    <text x="8.0" y="30.0">★</text>
+    <text x="10.9" y="19.0">★</text>
+    <text x="19.0" y="10.9">★</text>
+          </g>
+          <!-- Brilho -->
+          <ellipse cx="22" cy="15" rx="10" ry="6" fill="rgba(255,255,255,0.08)"/>
+        </svg>
+      </div>
+
+      <div class="modal-title">VanBerto's — União Europeia</div>
+      <div class="modal-sub">Aprende a brincar • Conhece os 27 países</div>
+
+      <!-- Mini stats -->
+      <div class="hero-stats">
+        <span class="stat-badge">🎮 10 jogos</span>
+        <span class="stat-badge">🌍 27 países</span>
+        <span class="stat-badge">🗣️ 24 línguas</span>
+        <span class="stat-badge">🏛️ desde 1957</span>
+      </div>
+
+      <!-- VanBerto -->
+      <div class="modal-vb">
+        <div class="modal-vb-robot">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e5f2ff"/><stop offset="100%" stop-color="#bfdbfe"/>
+              </linearGradient>
+              <linearGradient id="vg3" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#38bdf8"/>
+              </linearGradient>
+            </defs>
+            <circle cx="40" cy="40" r="34" fill="rgba(0,80,255,0.15)"/>
+            <rect x="18" y="30" width="44" height="32" rx="14" fill="url(#bg3)"/>
+            <circle cx="40" cy="46" r="7" fill="#9ca3af"/>
+            <rect x="22" y="10" width="36" height="26" rx="13" fill="url(#bg3)"/>
+            <rect x="26" y="15" width="28" height="16" rx="8" fill="url(#vg3)"/>
+            <rect x="26" y="15" width="28" height="16" rx="8" fill="#e5f2ff" opacity="0.9"
+              style="transform-origin:40px 23px;animation:vbBlink 5s ease-in-out infinite;"/>
+            <circle cx="33" cy="23" r="2.5" fill="#0f172a"/>
+            <circle cx="47" cy="23" r="2.5" fill="#0f172a"/>
+            <line x1="40" y1="10" x2="40" y2="4" stroke="#FFD600" stroke-width="2"/>
+            <circle cx="40" cy="3" r="2.5" fill="#FFD600"/>
+            <rect x="12" y="34" width="6" height="20" rx="3" fill="#e5e7eb"/>
+            <rect x="62" y="34" width="6" height="20" rx="3" fill="#e5e7eb"
+              style="transform-origin:65px 44px;animation:waveVB 1.5s ease-in-out infinite;"/>
+            <rect x="22" y="58" width="12" height="8" rx="3" fill="#1f2937"/>
+            <rect x="46" y="58" width="12" height="8" rx="3" fill="#1f2937"/>
+          </svg>
+        </div>
+        <div class="modal-vb-balloon" id="vbMsg">
+          Olá! Sou o VanBerto's<br>Vamos conhecer a UE!
+        </div>
+      </div>
+    </div>
+
+    <!-- JOGOS -->
+    <div class="games-section">
+
+      <!-- 🚂 DESTAQUE -->
+      <div class="section-divider">🚂 Destaque <span class="section-count">3 jogos</span></div>
+      <!-- Comboio full width -->
+      <div class="games-grid games-grid-1">
+        <a class="game-card comboio" href="https://vvarzea.github.io/VanBerto-s-Comboio-Bandeira-UE/" target="_blank"
+           style="--gc:#FFD600;--gc-glow:rgba(255,214,0,0.35);">
+          <canvas id="trainCanvas" class="train-canvas"></canvas>
+          <div class="comboio-info">
+            <div class="game-name" style="font-size:clamp(13px,3.8vw,17px);">Comboio Bandeira UE</div>
+            <div class="game-desc">Arrasta cada bandeira para o vagão certo e conhece as bandeiras dos 27 países da UE!</div>
+          </div>
+        </a>
+      </div>
+      <!-- Missão UE + Hora do Código side by side -->
+      <div class="games-grid games-grid-2 destaque-sub" style="margin-top:clamp(8px,2vw,14px);">
+        <a class="game-card pintar" href="https://vvarzea.github.io/VanBerto-s-Miss-o-UE/" target="_blank"
+           style="--gc:#e63946;--gc-glow:rgba(230,57,70,0.40);">
+          <div class="game-icon"><svg class="card-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="hbg" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#1a3a8a"/>
+      <stop offset="100%" stop-color="#0a1f5c"/>
+    </radialGradient>
+    <linearGradient id="hscroll" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#fde68a"/>
+    </linearGradient>
+    <linearGradient id="hscrollbar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4a843"/>
+      <stop offset="100%" stop-color="#a07020"/>
+    </linearGradient>
+  </defs>
+
+  <!-- EU blue background -->
+  <rect width="100" height="100" rx="18" fill="url(#hbg)"/>
+
+  <!-- 12 EU stars ring (decorative, subtle) -->
+  <g opacity=".25" fill="#FFD600" font-size="7" font-family="serif" text-anchor="middle" dominant-baseline="central">
+    <text x="50" y="8">★</text>
+    <text x="71" y="14">★</text>
+    <text x="85" y="31">★</text>
+    <text x="88" y="52">★</text>
+    <text x="80" y="72">★</text>
+    <text x="63" y="85">★</text>
+    <text x="50" y="91">★</text>
+    <text x="37" y="85">★</text>
+    <text x="20" y="72">★</text>
+    <text x="12" y="52">★</text>
+    <text x="15" y="31">★</text>
+    <text x="29" y="14">★</text>
+  </g>
+
+  <!-- Scroll / pergaminho -->
+  <!-- top rod -->
+  <rect x="18" y="22" width="64" height="8" rx="4" fill="url(#hscrollbar)"/>
+  <!-- bottom rod -->
+  <rect x="18" y="72" width="64" height="8" rx="4" fill="url(#hscrollbar)"/>
+  <!-- scroll body -->
+  <rect x="22" y="26" width="56" height="50" fill="url(#hscroll)"/>
+  <!-- scroll curl top -->
+  <ellipse cx="50" cy="26" rx="28" ry="5" fill="#fef9e7"/>
+  <!-- scroll curl bottom -->
+  <ellipse cx="50" cy="76" rx="28" ry="5" fill="#fde68a"/>
+
+  <!-- Content on scroll -->
+  <!-- "1957" year - Treaty of Rome -->
+  <text x="50" y="38" font-size="9" font-weight="bold" text-anchor="middle"
+        fill="#7c4a00" font-family="Fredoka One,cursive">1957</text>
+  <!-- small line decoration -->
+  <line x1="28" y1="43" x2="72" y2="43" stroke="#c8952a" stroke-width="1.2" opacity=".6"/>
+  <!-- "UE" text -->
+  <text x="50" y="54" font-size="13" font-weight="bold" text-anchor="middle"
+        fill="#003399" font-family="Fredoka One,cursive">UE</text>
+  <!-- star row -->
+  <text x="50" y="65" font-size="9" text-anchor="middle"
+        fill="#FFD600" font-family="serif">★ ★ ★</text>
+
+  <!-- VanBerto peeking from bottom-right corner -->
+  <!-- head -->
+  <circle cx="78" cy="80" r="11" fill="white"/>
+  <rect x="71" y="76" width="14" height="7" rx="3.5" fill="#22d3ee"/>
+  <ellipse cx="74" cy="77.5" rx="2.5" ry="1.5" fill="rgba(255,255,255,0.45)"/>
+  <circle cx="74.5" cy="80" r="1.8" fill="#0f172a"/>
+  <circle cx="81.5" cy="80" r="1.8" fill="#0f172a"/>
+  <circle cx="75.2" cy="79.3" r="0.7" fill="white"/>
+  <circle cx="82.2" cy="79.3" r="0.7" fill="white"/>
+  <!-- antenna -->
+  <line x1="78" y1="69" x2="78" y2="64" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="78" cy="62.5" r="2.8" fill="#38bdf8"/>
+  <!-- hand pointing at scroll -->
+  <ellipse cx="65" cy="76" rx="4" ry="3" fill="white" stroke="#d1d5db" stroke-width="0.8"
+           transform="rotate(-30 65 76)"/>
+</svg></div>
+          <div class="game-info">
+            <div class="game-name">Missão UE</div>
+            <div class="game-desc">Viaja pela história da UE — tratados, origens e marcos que moldaram os 27 países!</div>
+          </div>
+        </a>
+        <a class="game-card pintar" href="https://vvarzea.github.io/VanBerto-s-UE-Codigo/" target="_blank"
+           style="--gc:#16a34a;--gc-glow:rgba(22,163,74,0.45);">
+          <div class="game-icon"><svg class="card-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="ig_cod_bg" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#166534"/>
+      <stop offset="100%" stop-color="#052e16"/>
+    </radialGradient>
+    <linearGradient id="ig_cod_screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f1e12"/>
+      <stop offset="100%" stop-color="#0a1a0d"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" rx="18" fill="url(#ig_cod_bg)"/>
+  <rect x="14" y="18" width="72" height="52" rx="6" fill="#1e293b"/>
+  <rect x="14" y="18" width="72" height="52" rx="6" fill="none" stroke="#22c55e" stroke-width="2"/>
+  <rect x="19" y="23" width="62" height="40" rx="4" fill="url(#ig_cod_screen)"/>
+  <rect x="24" y="29" width="22" height="3.5" rx="1.5" fill="#22c55e" opacity=".9"/>
+  <rect x="30" y="35" width="30" height="3.5" rx="1.5" fill="#60a5fa" opacity=".85"/>
+  <rect x="30" y="41" width="18" height="3.5" rx="1.5" fill="#f472b6" opacity=".8"/>
+  <rect x="24" y="47" width="26" height="3.5" rx="1.5" fill="#22c55e" opacity=".9"/>
+  <rect x="52" y="47" width="3" height="3.5" rx="1" fill="#ffffff" opacity=".9"/>
+  <text x="25" y="35" font-size="7" fill="#fbbf24" font-family="monospace" font-weight="bold">&lt;</text>
+  <text x="25" y="41" font-size="7" fill="#fbbf24" font-family="monospace" font-weight="bold">/&gt;</text>
+  <rect x="44" y="70" width="12" height="7" rx="2" fill="#334155"/>
+  <rect x="36" y="76" width="28" height="5" rx="2.5" fill="#475569"/>
+  <!-- VanBerto larger, bottom-right, more visible -->
+  <!-- body -->
+  <ellipse cx="76" cy="86" rx="11" ry="10" fill="white"/>
+  <!-- belly -->
+  <circle cx="76" cy="88" r="4" fill="#e2e8f0"/>
+  <circle cx="76" cy="88" r="2.5" fill="#94a3b8"/>
+  <!-- head -->
+  <circle cx="76" cy="72" r="10" fill="white"/>
+  <!-- visor -->
+  <rect x="69" y="68" width="14" height="8" rx="4" fill="#22d3ee"/>
+  <ellipse cx="72.5" cy="70" rx="3" ry="1.8" fill="rgba(255,255,255,0.45)"/>
+  <!-- eyes -->
+  <circle cx="72.5" cy="73" r="2" fill="#0f172a"/>
+  <circle cx="79.5" cy="73" r="2" fill="#0f172a"/>
+  <circle cx="73.2" cy="72.2" r="0.8" fill="white"/>
+  <circle cx="80.2" cy="72.2" r="0.8" fill="white"/>
+  <!-- antenna -->
+  <line x1="76" y1="62" x2="76" y2="57" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="76" cy="55.5" r="3.5" fill="#38bdf8"/>
+  <!-- left arm pointing at screen -->
+  <ellipse cx="61" cy="76" rx="4" ry="6" fill="white" transform="rotate(30 61 76)"/>
+</svg></div>
+          <div class="game-info">
+            <div class="game-name">Hora do Código</div>
+            <div class="game-desc">Programa com blocos, resolve desafios e aprende a lógica da computação com temas da UE!</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- 🗺️ EXPLORAÇÃO -->
+      <div class="section-divider">🗺️ Exploração <span class="section-count">4 jogos</span></div>
+      <div class="games-grid games-grid-2">
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-UE-QUIZ/" target="_blank"
+           style="--gc:#6c3be0;--gc-glow:rgba(108,59,224,0.50);">
+          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ig_quizexp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3d1a8f"/>
+      <stop offset="100%" stop-color="#1a0060"/>
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="22" fill="url(#ig_quizexp)"/>
+  <rect x="10" y="10" width="28" height="22" rx="6" fill="rgba(255,214,0,0.15)" stroke="#FFD600" stroke-width="1.5"/>
+  <polygon points="14,32 10,40 22,32" fill="#FFD600" opacity=".7"/>
+  <text x="24" y="24" fill="#FFD600" font-size="18" font-weight="900" text-anchor="middle" dominant-baseline="central" font-family="Fredoka One,cursive">?</text>
+</svg></div>
+          <div class="game-name">Quiz UE</div>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-sUEMapa-/" target="_blank"
+           style="--gc:#0891b2;--gc-glow:rgba(8,145,178,0.50);">
+          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="ig_mapa" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#4a7fff"/>
+      <stop offset="100%" stop-color="#003399"/>
+    </radialGradient>
+  </defs>
+  <circle cx="24" cy="24" r="22" fill="url(#ig_mapa)"/>
+  <!-- Continentes simplificados -->
+  <ellipse cx="16" cy="20" rx="7" ry="9" fill="#FFD600" opacity=".85" transform="rotate(-15 16 20)"/>
+  <ellipse cx="30" cy="18" rx="9" ry="7" fill="#FFD600" opacity=".85" transform="rotate(10 30 18)"/>
+  <ellipse cx="29" cy="31" rx="5" ry="7" fill="#FFD600" opacity=".75" transform="rotate(5 29 31)"/>
+  <!-- Pin -->
+  <circle cx="24" cy="20" r="4" fill="#fff" opacity=".95"/>
+  <circle cx="24" cy="20" r="2" fill="#003399"/>
+  <line x1="24" y1="24" x2="24" y2="30" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
+          <div class="game-name">Coloca no Mapa</div>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Advinha-Capital-UE/" target="_blank"
+           style="--gc:#ea580c;--gc-glow:rgba(234,88,12,0.50);">
+          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ig_cap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a55e0"/>
+      <stop offset="100%" stop-color="#002f99"/>
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="22" fill="url(#ig_cap)"/>
+  <!-- Templo/Capitólio -->
+  <rect x="10" y="32" width="28" height="4" rx="1.5" fill="#FFD600"/>
+  <rect x="12" y="20" width="24" height="12" rx="1" fill="rgba(255,214,0,0.18)" stroke="#FFD600" stroke-width="1.2"/>
+  <!-- Colunas -->
+  <rect x="13" y="21" width="3" height="11" rx="1" fill="#FFD600" opacity=".9"/>
+  <rect x="19" y="21" width="3" height="11" rx="1" fill="#FFD600" opacity=".9"/>
+  <rect x="25" y="21" width="3" height="11" rx="1" fill="#FFD600" opacity=".9"/>
+  <rect x="31" y="21" width="3" height="11" rx="1" fill="#FFD600" opacity=".9"/>
+  <!-- Frontão triangular -->
+  <polygon points="24,12 10,21 38,21" fill="#FFD600" opacity=".9"/>
+  <!-- Cúpula -->
+  <ellipse cx="24" cy="14" rx="6" ry="4" fill="#FFD600"/>
+  <!-- Bandeirinha -->
+  <line x1="24" y1="8" x2="24" y2="13" stroke="#FFD600" stroke-width="1.5"/>
+  <polygon points="24,8 29,10 24,12" fill="#FFD600"/>
+</svg></div>
+          <div class="game-name">Adivinha a Capital</div>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Ligar-as-Capitais-UE/" target="_blank"
+           style="--gc:#db2777;--gc-glow:rgba(219,39,119,0.50);">
+          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ig_liga" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2060e0"/>
+      <stop offset="100%" stop-color="#002a99"/>
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="22" fill="url(#ig_liga)"/>
+  <!-- Elo esquerdo -->
+  <rect x="8" y="18" width="14" height="12" rx="6" fill="none" stroke="#FFD600" stroke-width="3.5"/>
+  <rect x="9.75" y="19.75" width="10.5" height="8.5" rx="4.25" fill="url(#ig_liga)"/>
+  <!-- Elo direito -->
+  <rect x="26" y="18" width="14" height="12" rx="6" fill="none" stroke="#FFD600" stroke-width="3.5"/>
+  <rect x="27.75" y="19.75" width="10.5" height="8.5" rx="4.25" fill="url(#ig_liga)"/>
+  <!-- Sobreposição centro -->
+  <rect x="19" y="20" width="10" height="8" rx="1" fill="url(#ig_liga)"/>
+  <!-- Estrelinhas UE -->
+  <text x="15" y="26" fill="#FFD600" font-size="6" text-anchor="middle" dominant-baseline="central">★</text>
+  <text x="33" y="26" fill="#FFD600" font-size="6" text-anchor="middle" dominant-baseline="central">★</text>
+</svg></div>
+          <div class="game-name">Liga o Par</div>
+        </a>
+
+      </div>
+
+      <!-- 🎮 QUIZ & PALAVRAS -->
+      <div class="section-divider">🎮 Quiz &amp; Palavras <span class="section-count">2 jogos</span></div>
+      <div class="games-grid games-grid-2">
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-UEPalavrasCruzadas/" target="_blank"
+           style="--gc:#FFD600;--gc-glow:rgba(255,214,0,0.35);">
+          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ig_cruz" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#b8960a"/>
+      <stop offset="100%" stop-color="#7a6000"/>
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="22" fill="url(#ig_cruz)"/>
+  <!-- Grelha de palavras cruzadas -->
+  <rect x="10" y="10" width="8" height="8" rx="1.5" fill="#FFD600" opacity=".9"/>
+  <rect x="20" y="10" width="8" height="8" rx="1.5" fill="#FFD600" opacity=".9"/>
+  <rect x="30" y="10" width="8" height="8" rx="1.5" fill="rgba(255,214,0,0.25)" stroke="#FFD600" stroke-width="1"/>
+  <rect x="10" y="20" width="8" height="8" rx="1.5" fill="rgba(255,214,0,0.25)" stroke="#FFD600" stroke-width="1"/>
+  <rect x="20" y="20" width="8" height="8" rx="1.5" fill="#FFD600" opacity=".9"/>
+  <rect x="30" y="20" width="8" height="8" rx="1.5" fill="#FFD600" opacity=".9"/>
+  <rect x="10" y="30" width="8" height="8" rx="1.5" fill="#FFD600" opacity=".9"/>
+  <rect x="20" y="30" width="8" height="8" rx="1.5" fill="rgba(255,214,0,0.25)" stroke="#FFD600" stroke-width="1"/>
+  <rect x="30" y="30" width="8" height="8" rx="1.5" fill="#FFD600" opacity=".9"/>
+  <!-- Lápis -->
+  <line x1="34" y1="14" x2="42" y2="6" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+  <polygon points="34,14 38,10 42,6 40,8 36,12" fill="white" opacity=".9"/>
+</svg></div>
+          <div class="game-name">Palavras Cruzadas</div>
+        </a>
+
+        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-UESopadeLetras/" target="_blank"
+           style="--gc:#c0300a;--gc-glow:rgba(192,48,10,0.50);">
+          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ig_sopa" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c0300a"/>
+      <stop offset="100%" stop-color="#7a1500"/>
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="22" fill="url(#ig_sopa)"/>
+  <!-- Letras de fundo -->
+  <text x="12" y="18" fill="rgba(255,214,0,0.35)" font-size="8" font-family="Fredoka One,cursive">U E</text>
+  <text x="10" y="27" fill="rgba(255,214,0,0.35)" font-size="8" font-family="Fredoka One,cursive">A B C</text>
+  <text x="12" y="36" fill="rgba(255,214,0,0.35)" font-size="8" font-family="Fredoka One,cursive">D E</text>
+  <!-- Lupa -->
+  <circle cx="26" cy="22" r="9" fill="none" stroke="#FFD600" stroke-width="3"/>
+  <line x1="32" y1="29" x2="38" y2="37" stroke="#FFD600" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Letra destacada -->
+  <circle cx="26" cy="22" r="5" fill="rgba(255,214,0,0.15)"/>
+  <text x="26" y="23" fill="#FFD600" font-size="7" font-weight="900" text-anchor="middle" dominant-baseline="central" font-family="Fredoka One,cursive">EU</text>
+</svg></div>
+          <div class="game-name">Sopa de Letras</div>
+        </a>
+
+      </div>
+
+      <!-- 🎨 CRIATIVO -->
+      <div class="section-divider">🎨 Criativo <span class="section-count">1 jogo</span></div>
+      <div class="games-grid games-grid-1">
+        <a class="game-card pintar" href="https://vvarzea.github.io/VanBerto-s-Pintar-Bandeira-/" target="_blank"
+           style="--gc:#00BCD4;--gc-glow:rgba(0,188,212,0.40);">
+          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ig_pint" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#007a99"/>
+      <stop offset="100%" stop-color="#004d66"/>
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="22" fill="url(#ig_pint)"/>
+  <!-- Paleta -->
+  <ellipse cx="24" cy="26" rx="14" ry="11" fill="rgba(255,255,255,0.12)" stroke="#FFD600" stroke-width="1.5"/>
+  <ellipse cx="29" cy="30" rx="5" ry="4" fill="rgba(0,0,0,0.3)"/>
+  <!-- Gotas de tinta -->
+  <circle cx="14" cy="20" r="3.5" fill="#E53935"/>
+  <circle cx="22" cy="16" r="3.5" fill="#FFD600"/>
+  <circle cx="31" cy="17" r="3.5" fill="#4CAF50"/>
+  <circle cx="37" cy="23" r="3.5" fill="#2196F3"/>
+  <!-- Pincel -->
+  <line x1="22" y1="32" x2="10" y2="12" stroke="#FFD600" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="10" cy="11" rx="3" ry="2" fill="#FFD600" transform="rotate(-30 10 11)"/>
+</svg></div>
+          <div class="game-info">
+            <div class="game-name">Pinta a Bandeira</div>
+            <div class="game-desc">Escolhe um país e pinta a sua bandeira com as cores certas e descobre os brasões e símbolos da UE!</div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+    <!-- FOOTER -->
+    <div class="modal-footer">
+      <span class="footer-credit">VanBerto's</span>
+      <span class="footer-eu">🇪🇺</span>
+      <span class="footer-credit">Professora: Vanda Várzea</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const msgs = [
+  "Olá! Sou o VanBerto's<br>Vamos conhecer a UE!",
+  "A UE tem 27 países<br>e 24 línguas oficiais! 🌍",
+  "O Euro é usado<br>em 20 países da UE! 💶",
+  "A UE tem 705<br>eurodeputados eleitos! 🏛️",
+  "O hino da UE é<br>a Ode à Alegria de Beethoven! 🎵",
+  "O dia da Europa<br>é celebrado a 9 de maio! 🇪🇺",
+  "Consegues conhecer<br>todos os 27 países? 🏆",
+  "Pinta as bandeiras<br>e descobre curiosidades! 🎨",
+  "Liga cada país<br>à sua capital! 🔗",
+  "Embarca na Missão UE<br>e viaja pela história da Europa! 🗺️",
+  "Aprende a programar<br>com a Hora do Código! 💻",
+  "A UE nasceu com o<br>Tratado de Roma em 1957! 📜",
+];
+let idx = 0;
+const el = document.getElementById('vbMsg');
+setInterval(() => {
+  el.style.opacity = '0';
+  setTimeout(() => { idx = (idx+1)%msgs.length; el.innerHTML=msgs[idx]; el.style.opacity='1'; }, 400);
+}, 3500);
+
+document.querySelectorAll('.game-card').forEach((c,i) => {
+  c.style.opacity='0'; c.style.transform='translateY(12px)';
+  c.style.transition=`opacity 0.4s ${i*0.07}s, transform 0.4s ${i*0.07}s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s, border-color 0.2s`;
+  setTimeout(()=>{ c.style.opacity='1'; c.style.transform='translateY(0)'; }, 80+i*60);
+});
+
+// ── COMBOIO CANVAS ──────────────────────────────────────────────────────────
+(function(){
+  const cv = document.getElementById('trainCanvas');
+  if(!cv) return;
+  const ctx = cv.getContext('2d');
+  const DPR = Math.min(window.devicePixelRatio||1,2);
+  function resizeTrain(){
+    const w = cv.parentElement.clientWidth||660;
+    const h = Math.round(w*0.18);
+    cv.width = w*DPR; cv.height = h*DPR;
+    cv.style.width = w+'px'; cv.style.height = h+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+  }
+  resizeTrain();
+  window.addEventListener('resize', resizeTrain);
+  const W = ()=>cv.width/DPR, H = ()=>cv.height/DPR;
+  let t = 0;
+
+  function S(v){ return v*(H()/500); }
+
+  const wagons = [
+    {name:'Portugal', stripes:['#006600','#FF0000'], style:'pt'},
+    {name:'França',   stripes:['#002395','#FFFFFF','#ED2939'], style:'v3'},
+    {name:'Alemanha', stripes:['#000000','#DD0000','#FFCE00'], style:'h3'},
+  ];
+
+  function drawFlag(x,y,w,h,c){
+    const r=S(4);
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+    ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+    ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
+    ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+    ctx.clip();
+    if(c.style==='pt'){
+      // Portugal: green 2/5, red 3/5 + coat of arms dot
+      ctx.fillStyle='#006600';ctx.fillRect(x,y,w*0.4,h);
+      ctx.fillStyle='#FF0000';ctx.fillRect(x+w*0.4,y,w*0.6,h);
+      // simplified shield
+      ctx.beginPath();ctx.arc(x+w*0.4,y+h/2,h*0.22,0,Math.PI*2);
+      ctx.fillStyle='#FFD600';ctx.fill();
+      ctx.beginPath();ctx.arc(x+w*0.4,y+h/2,h*0.14,0,Math.PI*2);
+      ctx.fillStyle='#003399';ctx.fill();
+    } else if(c.style==='v3'){
+      // France: 3 vertical stripes
+      const t=w/3;
+      ctx.fillStyle=c.stripes[0];ctx.fillRect(x,y,t,h);
+      ctx.fillStyle=c.stripes[1];ctx.fillRect(x+t,y,t,h);
+      ctx.fillStyle=c.stripes[2];ctx.fillRect(x+t*2,y,t,h);
+    } else if(c.style==='h3'){
+      // Germany: 3 horizontal stripes
+      const t=h/3;
+      ctx.fillStyle=c.stripes[0];ctx.fillRect(x,y,w,t);
+      ctx.fillStyle=c.stripes[1];ctx.fillRect(x,y+t,w,t);
+      ctx.fillStyle=c.stripes[2];ctx.fillRect(x,y+t*2,w,t);
+    }
+    ctx.restore();
+    // gold border
+    ctx.save();
+    ctx.strokeStyle='rgba(255,215,0,0.6)';ctx.lineWidth=S(3);
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+    ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+    ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
+    ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function rrFill(x,y,w,h,r,fill){
+    if(w<=0||h<=0)return; r=Math.min(r,w/2,h/2);
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+    ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+    ctx.lineTo(x+r,y+h);ctx.arcTo(x,y+h,x,y+h-r,r);
+    ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+    if(fill!==undefined){ctx.fillStyle=fill;ctx.fill();}
+  }
+
+  function drawGoldenWheel(x,y,r){
+    const wa=t*2.5;
+    ctx.save();
+    ctx.globalAlpha=0.2;ctx.beginPath();ctx.arc(x,y+S(2),r+S(1),0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();
+    ctx.globalAlpha=1;
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle='#1a1008';ctx.fill();
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.strokeStyle='#c8952a';ctx.lineWidth=r*0.22;ctx.stroke();
+    ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.strokeStyle='#f0c040';ctx.lineWidth=r*0.07;ctx.stroke();
+    for(let k=0;k<8;k++){
+      const a=wa+k*Math.PI/4;
+      const sg=ctx.createLinearGradient(x+Math.cos(a)*r*0.18,y+Math.sin(a)*r*0.18,x+Math.cos(a)*r*0.76,y+Math.sin(a)*r*0.76);
+      sg.addColorStop(0,'#f0c040');sg.addColorStop(1,'#9a7020');
+      ctx.beginPath();ctx.moveTo(x+Math.cos(a)*r*0.16,y+Math.sin(a)*r*0.16);
+      ctx.lineTo(x+Math.cos(a)*r*0.76,y+Math.sin(a)*r*0.76);
+      ctx.strokeStyle=sg;ctx.lineWidth=r*0.15;ctx.lineCap='round';ctx.stroke();
+    }
+    const hg=ctx.createRadialGradient(x-r*0.05,y-r*0.05,0,x,y,r*0.2);
+    hg.addColorStop(0,'#f0c040');hg.addColorStop(1,'#7a5010');
+    ctx.beginPath();ctx.arc(x,y,r*0.2,0,Math.PI*2);ctx.fillStyle=hg;ctx.fill();
+    ctx.beginPath();ctx.arc(x,y,r*0.09,0,Math.PI*2);ctx.fillStyle='#2a1a04';ctx.fill();
+    ctx.restore();
+  }
+
+  function drawVanberto(cx,cy,scale){
+    const sc=scale/34;
+    ctx.save();ctx.translate(cx,cy);
+    ctx.beginPath();ctx.arc(0,0,34*sc,0,Math.PI*2);ctx.fillStyle='rgba(147,197,253,0.18)';ctx.fill();
+    function bG(){const g=ctx.createLinearGradient(-22*sc,-10*sc,-22*sc,22*sc);g.addColorStop(0,'#e5f2ff');g.addColorStop(1,'#bfdbfe');return g;}
+    rrFill(-22*sc,-10*sc,44*sc,32*sc,14*sc,bG());
+    ctx.beginPath();ctx.arc(0,6*sc,7*sc,0,Math.PI*2);ctx.fillStyle='#9ca3af';ctx.fill();
+    ctx.beginPath();ctx.arc(0,6*sc,4*sc,0,Math.PI*2);
+    const bg=ctx.createRadialGradient(-2*sc,4*sc,0,0,6*sc,4*sc);bg.addColorStop(0,'#60a5fa');bg.addColorStop(1,'#1d4ed8');ctx.fillStyle=bg;ctx.fill();
+    rrFill(-18*sc,-30*sc,36*sc,26*sc,13*sc,bG());
+    const vg=ctx.createLinearGradient(-14*sc,-25*sc,14*sc,-9*sc);vg.addColorStop(0,'#22d3ee');vg.addColorStop(1,'#38bdf8');
+    rrFill(-14*sc,-25*sc,28*sc,16*sc,8*sc,vg);
+    if(Math.sin(t*0.7)>0.96){
+      ctx.save();ctx.beginPath();
+      const r2=8*sc,x2=-14*sc,y2=-25*sc,w2=28*sc,h2=16*sc;
+      ctx.moveTo(x2+r2,y2);ctx.lineTo(x2+w2-r2,y2);ctx.arcTo(x2+w2,y2,x2+w2,y2+r2,r2);
+      ctx.lineTo(x2+w2,y2+h2-r2);ctx.arcTo(x2+w2,y2+h2,x2+w2-r2,y2+h2,r2);
+      ctx.lineTo(x2+r2,y2+h2);ctx.arcTo(x2,y2+h2,x2,y2+h2-r2,r2);
+      ctx.lineTo(x2,y2+r2);ctx.arcTo(x2,y2,x2+r2,y2,r2);ctx.closePath();
+      ctx.fillStyle='#e5f2ff';ctx.globalAlpha=0.95;ctx.fill();ctx.restore();
+    }
+    [-7*sc,7*sc].forEach(ex=>{
+      ctx.beginPath();ctx.arc(ex,-17*sc,2.5*sc,0,Math.PI*2);ctx.fillStyle='#0f172a';ctx.fill();
+      ctx.beginPath();ctx.arc(ex+0.8*sc,-17.8*sc,0.9*sc,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.85)';ctx.fill();
+    });
+    ctx.strokeStyle='#38bdf8';ctx.lineWidth=2*sc;
+    ctx.beginPath();ctx.moveTo(0,-30*sc);ctx.lineTo(0,-36*sc);ctx.stroke();
+    ctx.beginPath();ctx.arc(0,-38*sc,2.5*sc,0,Math.PI*2);ctx.fillStyle='#38bdf8';ctx.fill();
+    rrFill(-18*sc,-6*sc,6*sc,20*sc,3*sc,'#e5e7eb');
+    ctx.save();
+    ctx.translate(12*sc,4*sc);ctx.rotate(Math.sin(t*6)*18*Math.PI/180);
+    rrFill(0,-10*sc,6*sc,20*sc,3*sc,'#e5e7eb');
+    ctx.restore();
+    rrFill(-18*sc,20*sc,12*sc,8*sc,3*sc,'#1f2937');
+    rrFill(6*sc,20*sc,12*sc,8*sc,3*sc,'#1f2937');
+    ctx.save();ctx.lineWidth=1.8*sc;ctx.lineCap='round';
+    ctx.beginPath();ctx.arc(0,6*sc,5*sc,0.2,Math.PI-0.2);ctx.strokeStyle='#0f172a';ctx.stroke();
+    ctx.fillStyle='#fff';ctx.beginPath();ctx.ellipse(0,7*sc,3*sc,1.5*sc,0,0,Math.PI*2);ctx.fill();
+    ctx.restore();
+    ctx.restore();
+  }
+
+  function drawWagon(x,c,RAIL_Y){
+    const WW=S(104),WH=S(68);
+    const y=RAIL_Y;
+    const GOLD='#c8952a',GOLD2='#f0c040',GOLD3='#8a6010';
+    const BRD=WH*0.10,WIN_H=WH*0.46,WIN_W=WW*0.80;
+    const WIN_X=x+(WW-WIN_W)/2,WIN_Y=y-WH+BRD*1.1;
+    const NAME_Y=WIN_Y+WIN_H+WH*0.08,PLAT_Y=y-WH*0.18;
+    ctx.save();ctx.globalAlpha=0.2;ctx.beginPath();ctx.ellipse(x+WW/2,y+S(4),WW*0.48,S(6),0,0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();ctx.restore();
+    const bg=ctx.createLinearGradient(x,y-WH,x,y);
+    bg.addColorStop(0,'#9a5820');bg.addColorStop(0.4,'#7a4418');bg.addColorStop(1,'#5a3010');
+    rrFill(x,y-WH,WW,WH,S(5),bg);
+    const tg=ctx.createLinearGradient(x,y-WH,x,y-WH+BRD);
+    tg.addColorStop(0,GOLD2);tg.addColorStop(0.5,GOLD);tg.addColorStop(1,GOLD3);
+    rrFill(x,y-WH,WW,BRD,S(4),tg);
+    const botg=ctx.createLinearGradient(x,PLAT_Y-BRD,x,PLAT_Y);
+    botg.addColorStop(0,GOLD3);botg.addColorStop(0.5,GOLD);botg.addColorStop(1,GOLD2);
+    rrFill(x,PLAT_Y-BRD,WW,BRD,S(2),botg);
+    ctx.fillStyle=GOLD;ctx.fillRect(x,y-WH,WW*0.045,WH);ctx.fillRect(x+WW*0.955,y-WH,WW*0.045,WH);
+    ctx.strokeStyle=GOLD2;ctx.lineWidth=S(2);ctx.beginPath();ctx.roundRect(x+S(1),y-WH+S(1),WW-S(2),WH-S(2),S(5));ctx.stroke();
+    // flag window frame
+    rrFill(WIN_X,WIN_Y,WIN_W,WIN_H,S(5),'#1a0e04');
+    // flag inside (slightly inset)
+    const fp=S(4);
+    drawFlag(WIN_X+fp, WIN_Y+fp, WIN_W-fp*2, WIN_H-fp*2, c);
+    ctx.strokeStyle=GOLD2;ctx.lineWidth=S(2.5);
+    ctx.beginPath();ctx.roundRect(WIN_X,WIN_Y,WIN_W,WIN_H,S(5));ctx.stroke();
+    const fs=Math.min(WH*0.17,S(12));
+    ctx.save();ctx.fillStyle=GOLD2;ctx.font=`900 ${fs}px Fredoka One,cursive`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.shadowColor='rgba(0,0,0,0.9)';ctx.shadowBlur=S(4);
+    ctx.fillText(c.name,x+WW/2,NAME_Y);ctx.shadowBlur=0;ctx.restore();
+    rrFill(x+WW*0.02,PLAT_Y,WW*0.96,y-PLAT_Y,S(2),'#1a0e04');
+    const wr=Math.min(WH*0.28,WW*0.14);
+    drawGoldenWheel(x+WW*0.20,y,wr);
+    drawGoldenWheel(x+WW*0.80,y,wr);
+  }
+
+  function drawLoco(x,RAIL_Y){
+    const LW=S(148);
+    const y=RAIL_Y;
+    const by=y-LW*0.55;
+    const GOLD='#c8952a',GOLD2='#f0c040',GOLD3='#8a6010';
+    const wr=LW*0.21;
+    const bodyTop=by+LW*0.06,bodyH=y-bodyTop;
+    const cabX=x+LW*0.50,cabW=LW*0.50,cabY=bodyTop-LW*0.06,cabH=y-cabY;
+    const chX=x+LW*0.20,domeX=x+LW*0.36;
+    ctx.save();ctx.globalAlpha=0.2;ctx.beginPath();ctx.ellipse(x+LW/2,y+S(5),LW*0.48,S(7),0,0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();ctx.restore();
+    const bodyGrad=ctx.createLinearGradient(x,bodyTop,x,y);
+    bodyGrad.addColorStop(0,'#d80000');bodyGrad.addColorStop(0.4,'#aa0000');bodyGrad.addColorStop(0.8,'#7a0000');bodyGrad.addColorStop(1,'#4a0000');
+    const bodyR=bodyH*0.48;
+    ctx.beginPath();ctx.moveTo(x+bodyR,bodyTop);ctx.lineTo(x+LW*0.52,bodyTop);ctx.lineTo(x+LW*0.52,y);ctx.lineTo(x+bodyR,y);ctx.arc(x+bodyR,bodyTop+bodyH/2,bodyH/2,Math.PI*0.5,Math.PI*1.5);ctx.closePath();ctx.fillStyle=bodyGrad;ctx.fill();
+    ctx.strokeStyle=GOLD;ctx.lineWidth=S(2);ctx.beginPath();ctx.moveTo(x+bodyR,bodyTop);ctx.lineTo(x+LW*0.52,bodyTop);ctx.lineTo(x+LW*0.52,y);ctx.lineTo(x+bodyR,y);ctx.arc(x+bodyR,bodyTop+bodyH/2,bodyH/2,Math.PI*0.5,Math.PI*1.5);ctx.closePath();ctx.stroke();
+    [x+LW*0.28,x+LW*0.42].forEach(gx=>{
+      if(gx<x+LW*0.52){
+        const sg=ctx.createLinearGradient(gx,bodyTop,gx,y);
+        sg.addColorStop(0,GOLD2);sg.addColorStop(0.5,GOLD);sg.addColorStop(1,GOLD3);
+        ctx.fillStyle=sg;ctx.fillRect(gx,bodyTop,LW*0.022,bodyH);
+      }
+    });
+    const cg=ctx.createLinearGradient(cabX,cabY,cabX,y);
+    cg.addColorStop(0,'#cc0000');cg.addColorStop(0.5,'#8a0000');cg.addColorStop(1,'#4a0000');
+    rrFill(cabX,cabY,cabW,cabH,S(7),cg);
+    ctx.beginPath();ctx.roundRect(cabX-S(3),cabY-LW*0.11,cabW+S(6),LW*0.14,S(8));
+    const roofG=ctx.createLinearGradient(cabX,cabY-LW*0.11,cabX,cabY);roofG.addColorStop(0,'#0a0a0a');roofG.addColorStop(1,'#2a2a2a');ctx.fillStyle=roofG;ctx.fill();
+    ctx.beginPath();ctx.roundRect(cabX-S(5),cabY-S(2),cabW+S(10),S(7),S(3));ctx.fillStyle=GOLD;ctx.fill();
+    [[0.05,0.45],[0.52,0.92]].forEach(([fl,fr])=>{
+      const ww=cabW*(fr-fl),wh=LW*0.20,wx2=cabX+cabW*fl,wy2=cabY+LW*0.07;
+      rrFill(wx2-S(2),wy2-S(2),ww+S(4),wh+S(4),S(6),GOLD);
+      const wg=ctx.createLinearGradient(wx2,wy2,wx2,wy2+wh);
+      wg.addColorStop(0,'#d0ecfa');wg.addColorStop(0.5,'#8ccae8');wg.addColorStop(1,'#4a98c0');
+      rrFill(wx2,wy2,ww,wh,S(4),wg);
+    });
+    ctx.strokeStyle=GOLD;ctx.lineWidth=S(2);ctx.beginPath();ctx.roundRect(cabX+S(1),cabY+S(1),cabW-S(2),cabH-S(2),S(7));ctx.stroke();
+    const vbWinX=cabX+cabW*0.52+S(2),vbWinY=cabY+LW*0.07+S(2);
+    const vbWinW=cabW*0.40,vbWinH=LW*0.18;
+    ctx.save();
+    const rr=S(4);
+    ctx.beginPath();
+    ctx.moveTo(vbWinX+rr,vbWinY);ctx.lineTo(vbWinX+vbWinW-rr,vbWinY);ctx.arcTo(vbWinX+vbWinW,vbWinY,vbWinX+vbWinW,vbWinY+rr,rr);
+    ctx.lineTo(vbWinX+vbWinW,vbWinY+vbWinH-rr);ctx.arcTo(vbWinX+vbWinW,vbWinY+vbWinH,vbWinX+vbWinW-rr,vbWinY+vbWinH,rr);
+    ctx.lineTo(vbWinX+rr,vbWinY+vbWinH);ctx.arcTo(vbWinX,vbWinY+vbWinH,vbWinX,vbWinY+vbWinH-rr,rr);
+    ctx.lineTo(vbWinX,vbWinY+rr);ctx.arcTo(vbWinX,vbWinY,vbWinX+rr,vbWinY,rr);ctx.closePath();
+    ctx.clip();
+    const vbCX=vbWinX+vbWinW*0.5;
+    const vbCY=vbWinY+vbWinH*0.55+Math.sin(t*2)*S(1.2);
+    drawVanberto(vbCX,vbCY,vbWinH*0.42);
+    const hsc=(vbWinH*0.42)/34;
+    const hx=vbCX,hy=vbCY-52*hsc;
+    rrFill(hx-14*hsc,hy+8*hsc,28*hsc,4*hsc,2*hsc,'#1a1a1a');
+    rrFill(hx-9*hsc,hy,18*hsc,10*hsc,3*hsc,'#111');
+    ctx.fillStyle='#FFD600';ctx.fillRect(hx-9*hsc,hy+6*hsc,18*hsc,2.5*hsc);
+    ctx.restore();
+    ctx.beginPath();ctx.ellipse(domeX,bodyTop,LW*0.082,LW*0.072,0,Math.PI,0);
+    const dg2=ctx.createRadialGradient(domeX-LW*0.02,bodyTop-LW*0.04,S(1),domeX,bodyTop,LW*0.08);
+    dg2.addColorStop(0,'#bbb');dg2.addColorStop(0.5,'#444');dg2.addColorStop(1,'#111');ctx.fillStyle=dg2;ctx.fill();
+    const chimW=LW*0.092,chimH=LW*0.27;
+    const chimG=ctx.createLinearGradient(chX,bodyTop-chimH,chX,bodyTop);
+    chimG.addColorStop(0,'#777');chimG.addColorStop(0.5,'#333');chimG.addColorStop(1,'#111');
+    rrFill(chX-chimW/2,bodyTop-chimH,chimW,chimH,S(3),chimG);
+    const hatW=chimW*1.9,hatH=chimH*0.19;
+    rrFill(chX-hatW/2,bodyTop-chimH-hatH,hatW,hatH,S(3),'#1a1a1a');
+    ctx.fillStyle=GOLD3;ctx.fillRect(chX-hatW/2,bodyTop-chimH,hatW,S(2));
+    const flX=x+LW-S(4),flY=cabY+cabH*0.40;
+    ctx.beginPath();ctx.arc(flX,flY,S(10),0,Math.PI*2);ctx.fillStyle='#111';ctx.fill();
+    ctx.strokeStyle=GOLD;ctx.lineWidth=S(2);ctx.stroke();
+    ctx.save();ctx.shadowColor='rgba(255,240,100,0.9)';ctx.shadowBlur=S(18);
+    const flG=ctx.createRadialGradient(flX-S(2),flY-S(2),S(1),flX,flY,S(7));
+    flG.addColorStop(0,'#fffff0');flG.addColorStop(0.4,'#ffee44');flG.addColorStop(1,'#aa7700');
+    ctx.beginPath();ctx.arc(flX,flY,S(7),0,Math.PI*2);ctx.fillStyle=flG;ctx.fill();ctx.restore();
+    const plX=x+bodyR+LW*0.03,plY=bodyTop+bodyH*0.10,plW=LW*0.30,plH=bodyH*0.60;
+    rrFill(plX,plY,plW,plH,S(5),GOLD);
+    rrFill(plX+S(2),plY+S(2),plW-S(4),plH-S(4),S(4),'#880000');
+    ctx.fillStyle=GOLD2;ctx.font=`bold ${Math.min(plW*0.65,plH*0.72)}px Fredoka One,cursive`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.shadowColor='rgba(0,0,0,0.6)';ctx.shadowBlur=S(3);
+    ctx.fillText('1',plX+plW/2,plY+plH/2);ctx.shadowBlur=0;
+    drawGoldenWheel(x+wr,y+S(5),wr);
+    drawGoldenWheel(x+LW*0.60,y+S(5),wr);
+    drawGoldenWheel(x+LW-S(6),y+S(3),wr*0.62);
+    const wa=t*2.5;
+    ctx.save();ctx.lineCap='round';
+    ctx.strokeStyle='rgba(0,0,0,0.3)';ctx.lineWidth=S(8);
+    ctx.beginPath();ctx.moveTo(x+wr+Math.cos(wa)*wr*0.62,y+S(5)+Math.sin(wa)*wr*0.62);ctx.lineTo(x+LW*0.60+Math.cos(wa+Math.PI)*wr*0.62,y+S(5)+Math.sin(wa+Math.PI)*wr*0.62);ctx.stroke();
+    ctx.strokeStyle=GOLD3;ctx.lineWidth=S(6);ctx.stroke();
+    ctx.strokeStyle=GOLD2;ctx.lineWidth=S(2.5);ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawSmoke(x,y){
+    for(let i=0;i<3;i++){
+      const phase=((t*0.8+i*0.9)%(Math.PI*2));
+      const prog=phase/(Math.PI*2);
+      const sy=y-prog*S(28);
+      const sr=S(5)+prog*S(10);
+      ctx.save();ctx.globalAlpha=0.55*(1-prog);
+      ctx.beginPath();ctx.arc(x+(i-1)*S(4),sy,sr,0,Math.PI*2);
+      ctx.fillStyle='rgb(190,205,225)';ctx.fill();ctx.restore();
+    }
+  }
+
+  function drawRail(RAIL_Y){
+    ctx.fillStyle='#475569';ctx.fillRect(0,RAIL_Y+S(2),W(),S(5));
+    ctx.fillStyle='#334155';ctx.fillRect(0,RAIL_Y+S(6),W(),S(4));
+    ctx.fillStyle='#78350f';
+    for(let dx=4;dx<W();dx+=26){
+      ctx.beginPath();ctx.roundRect(dx,RAIL_Y,S(12),S(12),S(2));ctx.fill();
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W(),H());
+    const RAIL_Y=H()*0.80;
+    const LW=S(148);
+    const WW=S(104),WG=S(6);
+    const totalW=LW+(wagons.length*(WW+WG));
+    const startX=(W()-totalW)/2;
+    const locoX=startX;
+    const w1X=locoX+LW+WG;
+    const w2X=w1X+WW+WG;
+    const w3X=w2X+WW+WG;
+    const chX=locoX+LW*0.20;
+    const bodyTop=RAIL_Y-LW*0.55+LW*0.06;
+    drawSmoke(chX,bodyTop-LW*0.20);
+    drawRail(RAIL_Y);
+    drawWagon(w3X,wagons[2],RAIL_Y);
+    drawWagon(w2X,wagons[1],RAIL_Y);
+    drawWagon(w1X,wagons[0],RAIL_Y);
+    drawLoco(locoX,RAIL_Y);
+  }
+
+  function loop(){ t+=0.018; draw(); requestAnimationFrame(loop); }
+  loop();
+})();
+
+
+</script>
+
+<!-- D3 + TopoJSON -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+const EU_IDS = new Set([
+  '620','724','250','276','380','528','056','442','372','616',
+  '040','752','208','246','300','642','348','191','100','703',
+  '470','203','705','233','428','440','196'
+]);
+const ISO_TO_NAME = {
+  '620':'Portugal','724':'Espanha','250':'França','276':'Alemanha',
+  '380':'Itália','528':'Países Baixos','056':'Bélgica','442':'Luxemburgo',
+  '372':'Irlanda','616':'Polónia','040':'Áustria','752':'Suécia',
+  '208':'Dinamarca','246':'Finlândia','300':'Grécia','642':'Roménia',
+  '348':'Hungria','191':'Croácia','100':'Bulgária','703':'Eslováquia',
+  '470':'Malta','203':'República Checa','705':'Eslovénia',
+  '233':'Estónia','428':'Letónia','440':'Lituânia','196':'Chipre'
+};
+const ISO2 = {
+  '620':'PT','724':'ES','250':'FR','276':'DE','380':'IT',
+  '528':'NL','056':'BE','442':'LU','372':'IE','616':'PL','040':'AT',
+  '752':'SE','208':'DK','246':'FI','300':'GR','642':'RO','348':'HU',
+  '191':'HR','100':'BG','703':'SK','470':'MT','203':'CZ','705':'SI',
+  '233':'EE','428':'LV','440':'LT','196':'CY'
+};
+
+function euroFeatures(countries){
+  return countries.features.filter(f => {
+    try { const c=d3.geoCentroid(f); return c[0]>=-25&&c[0]<=45&&c[1]>=33&&c[1]<=72; }
+    catch(e){ return false; }
+  });
+}
+const isEU = f => EU_IDS.has(String(f.id).padStart(3,'0'));
+
+// ── MAPA HERO (fundo subtil no cabeçalho) ──────────────────────────
+async function drawHeroMap(){
+  const svgEl = document.getElementById('heroMapSvg');
+  if(!svgEl) return;
+  const hero = svgEl.closest('.modal-hero');
+  const W = hero.clientWidth || 600;
+  const H = hero.clientHeight || 260;
+  svgEl.setAttribute('width', W);
+  svgEl.setAttribute('height', H);
+  const svg = d3.select('#heroMapSvg');
+  const proj = d3.geoMercator().center([13,52]).scale(Math.min(W,H)*0.85).translate([W*0.52,H*0.50]);
+  const path = d3.geoPath().projection(proj);
+  try {
+    const world = window._worldData || await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json');
+    window._worldData = world;
+    const feats = euroFeatures(topojson.feature(world, world.objects.countries));
+    svg.append('g').selectAll('path').data(feats.filter(f=>!isEU(f))).join('path')
+      .attr('d',path).attr('fill','rgba(255,255,255,0.03)').attr('stroke','rgba(255,255,255,0.08)').attr('stroke-width',0.5);
+    svg.append('g').selectAll('path').data(feats.filter(isEU)).join('path')
+      .attr('d',path).attr('fill','rgba(0,51,153,0.18)').attr('stroke','rgba(255,214,0,0.55)').attr('stroke-width',0.8).attr('stroke-linejoin','round');
+    svgEl.style.opacity = '0.45';
+  } catch(e){ console.warn('Hero map error:', e); }
+}
+
+
+
+window.addEventListener('load', () => {
+  setTimeout(drawHeroMap, 50);
+});
+</script>
+</body>
+</html>
