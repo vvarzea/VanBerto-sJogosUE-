@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>VanBerto's — União Europeia 🇪🇺</title>
+<meta name="theme-color" content="#0d1840">
+<meta name="description" content="Jogos para conheceres os 27 países da União Europeia com o VanBerto's.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="VanBerto's UE">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -62,7 +71,9 @@ body::before{
   background:linear-gradient(160deg,#0a1030,#060c28);
   padding:clamp(12px,3.5vw,20px) clamp(12px,4vw,24px) clamp(8px,2.5vw,14px);
   text-align:center;position:relative;overflow:hidden;
+  min-height:clamp(200px,40vw,280px);
 }
+.hero-head{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,12px);}
 /* Silhueta Europa no fundo do hero */
 .modal-hero::before{
   content:'';position:absolute;inset:0;pointer-events:none;
@@ -90,8 +101,8 @@ body::before{
 /* ── EU ICON (12 estrelas perfeitas) ── */
 .eu-icon{
   position:relative;z-index:1;
-  width:clamp(52px,13vw,68px);height:clamp(52px,13vw,68px);
-  margin:0 auto 10px;
+  width:clamp(32px,8vw,42px);height:clamp(32px,8vw,42px);
+  margin:0;flex-shrink:0;
   animation:euPulse 3s ease-in-out infinite;
 }
 .eu-icon svg{width:100%;height:100%;}
@@ -102,9 +113,9 @@ body::before{
 
 .modal-title{
   font-family:'Fredoka One',cursive;
-  font-size:clamp(18px,5vw,32px);color:#FFD600;
-  text-shadow:0 0 30px rgba(255,214,0,0.55),0 4px 0 rgba(0,0,0,0.4);
-  margin-bottom:2px;position:relative;z-index:1;line-height:1.1;
+  font-size:clamp(16px,4.4vw,26px);color:#FFD600;
+  text-shadow:0 0 14px rgba(0,0,0,0.9),0 2px 0 rgba(0,0,0,0.6);
+  margin:0;position:relative;z-index:1;line-height:1.1;
 }
 .modal-sub{
   color:rgba(255,255,255,0.42);font-size:clamp(8px,2vw,10px);
@@ -128,20 +139,6 @@ body::before{
   letter-spacing:0.3px;white-space:nowrap;
 }
 
-/* VanBerto */
-.modal-vb{display:flex;align-items:center;justify-content:center;gap:12px;margin:0 0 4px;position:relative;z-index:1;}
-.modal-vb-robot{width:clamp(44px,11vw,64px);flex-shrink:0;animation:vbFloat 3s ease-in-out infinite;filter:drop-shadow(0 6px 18px rgba(255,214,0,0.20));}
-.modal-vb-balloon{
-  background:rgba(255,255,255,0.05);border:1.5px solid rgba(255,215,0,0.28);
-  border-radius:16px;padding:7px 12px;font-family:'Fredoka One',cursive;color:#FFD600;
-  font-size:clamp(10px,2.6vw,13px);text-align:left;position:relative;
-  max-width:min(230px,57vw);line-height:1.5;transition:opacity 0.4s;
-}
-.modal-vb-balloon::before{
-  content:'';position:absolute;left:-10px;top:14px;
-  border-top:7px solid transparent;border-bottom:7px solid transparent;
-  border-right:11px solid rgba(255,215,0,0.25);
-}
 @keyframes vbFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
 @keyframes vbBlink{0%,92%,100%{transform:scaleY(0);}95%{transform:scaleY(1);}}
 @keyframes waveVB{0%{transform:rotate(0deg);}25%{transform:rotate(-18deg);}50%{transform:rotate(0deg);}75%{transform:rotate(-18deg);}100%{transform:rotate(0deg);}}
@@ -261,15 +258,38 @@ body::before{
   display:flex;align-items:center;justify-content:space-between;
 }
 .footer-credit{font-family:'Fredoka One',cursive;color:rgba(255,255,255,0.28);font-size:clamp(9px,2.3vw,12px);letter-spacing:0.3px;}
-.footer-eu{font-size:clamp(15px,3.5vw,19px);animation:vbFloat 2.5s ease-in-out infinite;}
-
-@supports(padding-bottom:env(safe-area-inset-bottom)){body{padding-bottom:max(clamp(10px,3vw,24px),env(safe-area-inset-bottom));}}
-@media(max-height:560px){
-  .eu-icon{display:none;}
-  .hero-stats{display:none;}
-  .modal-hero{padding:8px 14px 8px;}
-  .modal-vb-robot{width:36px;}
+.modal-footer{align-items:flex-end;gap:10px;}
+.footer-sign{
+  align-self:flex-end;display:inline-block;white-space:nowrap;
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:clamp(11px,2.9vw,13px);color:rgba(255,255,255,0.8);
+  background:rgba(10,4,25,0.55);padding:4px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.10);
 }
+.footer-eu{align-self:center;}
+.footer-vb{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;}
+#footer-vb-robot{
+  width:clamp(56px,11vw,84px);height:auto;display:block;cursor:pointer;
+  animation:vbFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 12px #7dd3fc);
+}
+#footer-vb-robot:focus-visible{outline:3px solid #ffd700;outline-offset:4px;border-radius:12px;}
+#footer-vb-robot:hover{filter:drop-shadow(0 0 24px #38bdf8);}
+#footer-vb-robot.bounce{animation:robotPop .65s cubic-bezier(.34,1.56,.64,1),vbFloat 3s ease-in-out .65s infinite;}
+@keyframes robotPop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-18px) rotate(-6deg)}70%{transform:translateY(-8px) rotate(5deg)}}
+.footer-vb-name{font-family:'Fredoka One',cursive;color:#ffa733;font-size:clamp(10px,2.6vw,12px);line-height:1.2;text-shadow:0 1px 6px rgba(0,0,0,.8),0 0 10px rgba(236,30,121,.4);}
+#footer-bubble{
+  --bc:#dcebff;position:absolute;right:0;bottom:calc(100% + 4px);z-index:20;
+  background:linear-gradient(135deg,var(--bc),#fff);
+  border:3px solid #0f172a;outline:2px solid #1e293b;outline-offset:-4px;
+  border-radius:16px;padding:6px 10px 5px;box-shadow:3px 3px 0 #0f172a;
+  font-family:"Comic Sans MS","Trebuchet MS",sans-serif;font-size:clamp(.62rem,1.5vw,.78rem);font-weight:bold;color:#0f172a;
+  width:max-content;max-width:180px;min-width:80px;text-align:center;pointer-events:none;
+  opacity:0;transform:translateY(-6px) scale(.88);transform-origin:bottom right;
+  transition:opacity .38s,transform .38s cubic-bezier(.34,1.56,.64,1);
+}
+#footer-bubble::after{content:"";position:absolute;bottom:-14px;right:22px;border-left:10px solid transparent;border-right:10px solid transparent;border-top:14px solid #0f172a;}
+#footer-bubble::before{content:"";position:absolute;bottom:-9px;right:24px;border-left:8px solid transparent;border-right:8px solid transparent;border-top:11px solid var(--bc);z-index:1;}
+#footer-bubble.show{opacity:1;transform:translateY(0) scale(1);}
+@media(max-width:480px){#footer-vb-robot{width:54px;}#footer-bubble{max-width:150px;font-size:.7rem;}}
+@media(prefers-reduced-motion:reduce){#footer-vb-robot{animation:none;}}
 </style>
 </head>
 <body>
@@ -292,6 +312,7 @@ body::before{
         <svg id="heroMapSvg" xmlns="http://www.w3.org/2000/svg"></svg>
       </div>
 
+      <div class="hero-head">
       <!-- EU Icon — 12 estrelas com trigonometria perfeita -->
       <div class="eu-icon">
         <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
@@ -328,49 +349,6 @@ body::before{
       </div>
 
       <div class="modal-title">VanBerto's — União Europeia</div>
-      <div class="modal-sub">Aprende a brincar • Conhece os 27 países</div>
-
-      <!-- Mini stats -->
-      <div class="hero-stats">
-        <span class="stat-badge">🎮 10 jogos</span>
-        <span class="stat-badge">🌍 27 países</span>
-        <span class="stat-badge">🗣️ 24 línguas</span>
-        <span class="stat-badge">🏛️ desde 1957</span>
-      </div>
-
-      <!-- VanBerto -->
-      <div class="modal-vb">
-        <div class="modal-vb-robot">
-          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#e5f2ff"/><stop offset="100%" stop-color="#bfdbfe"/>
-              </linearGradient>
-              <linearGradient id="vg3" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#38bdf8"/>
-              </linearGradient>
-            </defs>
-            <circle cx="40" cy="40" r="34" fill="rgba(0,80,255,0.15)"/>
-            <rect x="18" y="30" width="44" height="32" rx="14" fill="url(#bg3)"/>
-            <circle cx="40" cy="46" r="7" fill="#9ca3af"/>
-            <rect x="22" y="10" width="36" height="26" rx="13" fill="url(#bg3)"/>
-            <rect x="26" y="15" width="28" height="16" rx="8" fill="url(#vg3)"/>
-            <rect x="26" y="15" width="28" height="16" rx="8" fill="#e5f2ff" opacity="0.9"
-              style="transform-origin:40px 23px;animation:vbBlink 5s ease-in-out infinite;"/>
-            <circle cx="33" cy="23" r="2.5" fill="#0f172a"/>
-            <circle cx="47" cy="23" r="2.5" fill="#0f172a"/>
-            <line x1="40" y1="10" x2="40" y2="4" stroke="#FFD600" stroke-width="2"/>
-            <circle cx="40" cy="3" r="2.5" fill="#FFD600"/>
-            <rect x="12" y="34" width="6" height="20" rx="3" fill="#e5e7eb"/>
-            <rect x="62" y="34" width="6" height="20" rx="3" fill="#e5e7eb"
-              style="transform-origin:65px 44px;animation:waveVB 1.5s ease-in-out infinite;"/>
-            <rect x="22" y="58" width="12" height="8" rx="3" fill="#1f2937"/>
-            <rect x="46" y="58" width="12" height="8" rx="3" fill="#1f2937"/>
-          </svg>
-        </div>
-        <div class="modal-vb-balloon" id="vbMsg">
-          Olá! Sou o VanBerto's<br>Vamos conhecer a UE!
-        </div>
       </div>
     </div>
 
@@ -721,36 +699,19 @@ body::before{
     </div>
     <!-- FOOTER -->
     <div class="modal-footer">
-      <span class="footer-credit">VanBerto's</span>
+      <span class="footer-sign">© Prof.ª Vanda Várzea</span>
       <span class="footer-eu">🇪🇺</span>
-      <span class="footer-credit">Professora: Vanda Várzea</span>
+      <div class="footer-vb">
+        <div id="footer-bubble" role="status" aria-live="polite"></div>
+        <canvas id="footer-vb-robot" width="96" height="96" role="button" tabindex="0" aria-label="VanBerto's — clica para falar"></canvas>
+        <span class="footer-vb-name">VanBerto's</span>
+      </div>
     </div>
 
   </div>
 </div>
 
 <script>
-const msgs = [
-  "Olá! Sou o VanBerto's<br>Vamos conhecer a UE!",
-  "A UE tem 27 países<br>e 24 línguas oficiais! 🌍",
-  "O Euro é usado<br>em 20 países da UE! 💶",
-  "A UE tem 705<br>eurodeputados eleitos! 🏛️",
-  "O hino da UE é<br>a Ode à Alegria de Beethoven! 🎵",
-  "O dia da Europa<br>é celebrado a 9 de maio! 🇪🇺",
-  "Consegues conhecer<br>todos os 27 países? 🏆",
-  "Pinta as bandeiras<br>e descobre curiosidades! 🎨",
-  "Liga cada país<br>à sua capital! 🔗",
-  "Embarca na Missão UE<br>e viaja pela história da Europa! 🗺️",
-  "Aprende a programar<br>com a Hora do Código! 💻",
-  "A UE nasceu com o<br>Tratado de Roma em 1957! 📜",
-];
-let idx = 0;
-const el = document.getElementById('vbMsg');
-setInterval(() => {
-  el.style.opacity = '0';
-  setTimeout(() => { idx = (idx+1)%msgs.length; el.innerHTML=msgs[idx]; el.style.opacity='1'; }, 400);
-}, 3500);
-
 document.querySelectorAll('.game-card').forEach((c,i) => {
   c.style.opacity='0'; c.style.transform='translateY(12px)';
   c.style.transition=`opacity 0.4s ${i*0.07}s, transform 0.4s ${i*0.07}s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s, border-color 0.2s`;
@@ -1123,17 +1084,18 @@ async function drawHeroMap(){
   svgEl.setAttribute('width', W);
   svgEl.setAttribute('height', H);
   const svg = d3.select('#heroMapSvg');
-  const proj = d3.geoMercator().center([13,52]).scale(Math.min(W,H)*0.85).translate([W*0.52,H*0.50]);
+  svg.selectAll('*').remove();
+  const proj = d3.geoMercator().center([14,47]).scale(Math.min(W*0.5,H*1.1)).translate([W*0.5,H*0.58]);
   const path = d3.geoPath().projection(proj);
   try {
     const world = window._worldData || await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json');
     window._worldData = world;
     const feats = euroFeatures(topojson.feature(world, world.objects.countries));
     svg.append('g').selectAll('path').data(feats.filter(f=>!isEU(f))).join('path')
-      .attr('d',path).attr('fill','rgba(255,255,255,0.03)').attr('stroke','rgba(255,255,255,0.08)').attr('stroke-width',0.5);
+      .attr('d',path).attr('fill','rgba(255,255,255,0.07)').attr('stroke','rgba(255,255,255,0.22)').attr('stroke-width',0.6);
     svg.append('g').selectAll('path').data(feats.filter(isEU)).join('path')
-      .attr('d',path).attr('fill','rgba(0,51,153,0.18)').attr('stroke','rgba(255,214,0,0.55)').attr('stroke-width',0.8).attr('stroke-linejoin','round');
-    svgEl.style.opacity = '0.45';
+      .attr('d',path).attr('fill','rgba(30,90,230,0.55)').attr('stroke','rgba(255,214,0,0.9)').attr('stroke-width',0.9).attr('stroke-linejoin','round');
+    svgEl.style.opacity = '1';
   } catch(e){ console.warn('Hero map error:', e); }
 }
 
@@ -1142,6 +1104,198 @@ async function drawHeroMap(){
 window.addEventListener('load', () => {
   setTimeout(drawHeroMap, 50);
 });
+let _rsT;window.addEventListener('resize',()=>{clearTimeout(_rsT);_rsT=setTimeout(drawHeroMap,200);});
+</script>
+<script>
+// ── VANBERTO'S ATUAL (rodapé) ─────────────────────────────────────────────
+(function(){
+function rrVan(ctx,x,y,w,h,r){
+  const rr=Math.min(r,w/2,h/2);
+  ctx.beginPath();ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath();
+}
+function cfVan(ctx,x,y,r,color){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}
+
+function drawVBAtual(ctx,blink,step,armsUp){
+  const w=96,h=96;
+  ctx.clearRect(0,0,w,h);
+  ctx.lineJoin="round"; ctx.lineCap="round";
+  ctx.save(); ctx.translate(0,6);
+  const NAVY="#16233e", NAVY2="#26365a", OUT="#101a30";
+  function white(x0,y0,x1,y1){const g=ctx.createLinearGradient(x0,y0,x1,y1);g.addColorStop(0,"#ffffff");g.addColorStop(0.55,"#e6edf7");g.addColorStop(1,"#b4c4dc");return g;}
+
+  const LIFT=8, STRIDE=3;
+  let lTop=70, rTop=70, lDX=0, rDX=0;
+  if(step===0){ lTop=70-LIFT; lDX=STRIDE; rDX=-STRIDE; }
+  else if(step===1){ rTop=70-LIFT; rDX=STRIDE; lDX=-STRIDE; }
+  function leg(cx,top){
+    rrVan(ctx,cx-5,top,10,11,4.5); ctx.fillStyle=white(cx-5,top,cx+5,top); ctx.fill();
+    ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+    const fy=top+9;
+    rrVan(ctx,cx-6.5,fy,13,9,4); ctx.fillStyle=NAVY; ctx.fill();
+    ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+    rrVan(ctx,cx-6.5,fy+2,13,2.4,1.2); ctx.fillStyle="rgba(255,255,255,0.85)"; ctx.fill();
+    cfVan(ctx,cx-2.5,fy+4.5,1.4,"rgba(255,255,255,0.5)");
+  }
+  leg(41+lDX,lTop); leg(55+rDX,rTop);
+
+  const ARM_SWING = 0.24;
+  const JUMP_RAISE = 2.9;
+  let lArmSwing = 0, rArmSwing = 0;
+  if(armsUp){ lArmSwing = JUMP_RAISE; rArmSwing = -JUMP_RAISE; }
+  else if(step===0){ lArmSwing=-ARM_SWING; rArmSwing=ARM_SWING; }
+  else if(step===1){ lArmSwing=ARM_SWING; rArmSwing=-ARM_SWING; }
+  function arm(sx,swing){
+    ctx.save();
+    const px=sx+4.5, py=52;
+    ctx.translate(px,py); ctx.rotate(swing); ctx.translate(-px,-py);
+    rrVan(ctx,sx,52,9,13,4.5); ctx.fillStyle=white(sx,52,sx+9,52); ctx.fill();
+    ctx.lineWidth=2.6; ctx.strokeStyle=OUT; ctx.stroke();
+    const hx=sx+4.5, hy=67;
+    cfVan(ctx,hx,hy,5,NAVY);
+    ctx.lineWidth=2.3; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(hx,hy,5,0,Math.PI*2); ctx.stroke();
+    cfVan(ctx,hx-2,hy+1.6,1.4,NAVY2); cfVan(ctx,hx+0.5,hy+2.4,1.4,NAVY2); cfVan(ctx,hx+2.5,hy+1.6,1.4,NAVY2);
+    ctx.restore();
+  }
+  arm(17,lArmSwing); arm(70,rArmSwing);
+
+  rrVan(ctx,26,44,44,32,15); ctx.fillStyle=white(28,46,68,46); ctx.fill();
+  ctx.save(); rrVan(ctx,26,44,44,32,15); ctx.clip();
+  const wg=ctx.createLinearGradient(0,64,0,76); wg.addColorStop(0,"rgba(22,35,62,0)"); wg.addColorStop(0.4,"#1c2c4c"); wg.addColorStop(1,"#142038");
+  ctx.fillStyle=wg; ctx.fillRect(26,62,44,16);
+  ctx.strokeStyle="rgba(16,26,48,0.6)"; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(28,64); ctx.lineTo(68,64); ctx.stroke();
+  ctx.fillStyle="rgba(255,255,255,0.5)"; ctx.beginPath(); ctx.ellipse(36,52,9,5.5,-0.5,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+  ctx.lineWidth=3; ctx.strokeStyle=OUT; rrVan(ctx,26,44,44,32,15); ctx.stroke();
+
+  cfVan(ctx,48,56,8,NAVY);
+  ctx.lineWidth=2.5; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(48,56,8,0,Math.PI*2); ctx.stroke();
+  const dome=ctx.createRadialGradient(45.5,53.5,1,48,56,7); dome.addColorStop(0,"#aebccf"); dome.addColorStop(0.6,"#5a6a85"); dome.addColorStop(1,"#2b3a57");
+  ctx.fillStyle=dome; ctx.beginPath(); ctx.arc(48,56,5.7,0,Math.PI*2); ctx.fill();
+  cfVan(ctx,46,53.8,1.5,"rgba(255,255,255,0.85)");
+
+  function pod(cx){
+    cfVan(ctx,cx,32,6,NAVY);
+    ctx.lineWidth=2.3; ctx.strokeStyle=OUT; ctx.beginPath(); ctx.arc(cx,32,6,0,Math.PI*2); ctx.stroke();
+    cfVan(ctx,cx,32,2.8,NAVY2); cfVan(ctx,cx-0.8,31,1,"rgba(255,255,255,0.6)");
+  }
+  pod(25); pod(71);
+
+  ctx.fillStyle=NAVY; ctx.beginPath(); ctx.moveTo(45,16); ctx.lineTo(51,16); ctx.lineTo(49.2,8); ctx.lineTo(46.8,8); ctx.closePath(); ctx.fill();
+  const halo=ctx.createRadialGradient(48,5,1,48,5,11); halo.addColorStop(0,"rgba(90,200,255,0.55)"); halo.addColorStop(1,"rgba(90,200,255,0)");
+  ctx.fillStyle=halo; ctx.beginPath(); ctx.arc(48,5,11,0,Math.PI*2); ctx.fill();
+  const bg=ctx.createRadialGradient(46.3,3.5,0.5,48,5,5.5); bg.addColorStop(0,"#e6f7ff"); bg.addColorStop(0.4,"#48b4ff"); bg.addColorStop(1,"#1670d8");
+  ctx.fillStyle=bg; ctx.beginPath(); ctx.arc(48,5,5.5,0,Math.PI*2); ctx.fill();
+  cfVan(ctx,46.2,3.4,1.6,"#ffffff");
+
+  rrVan(ctx,26,14,44,34,17); ctx.fillStyle=white(28,15,68,15); ctx.fill();
+  ctx.lineWidth=3; ctx.strokeStyle=OUT; ctx.stroke();
+  ctx.save(); rrVan(ctx,26,14,44,34,17); ctx.clip();
+  ctx.fillStyle="rgba(255,255,255,0.6)"; ctx.beginPath(); ctx.ellipse(38,19,10,4,-0.5,0,Math.PI*2); ctx.fill(); ctx.restore();
+
+  rrVan(ctx,30,20,36,23,12); ctx.fillStyle=NAVY; ctx.fill();
+  rrVan(ctx,32.5,22,31,19,10);
+  const vg=ctx.createLinearGradient(0,22,0,41); vg.addColorStop(0,"#7fd4ff"); vg.addColorStop(0.5,"#2a9bf0"); vg.addColorStop(1,"#1366c6");
+  ctx.fillStyle=vg; ctx.fill();
+  ctx.save(); rrVan(ctx,32.5,22,31,19,10); ctx.clip();
+  ctx.fillStyle="rgba(255,255,255,0.45)"; ctx.beginPath(); ctx.ellipse(42,25,9,3.5,-0.4,0,Math.PI*2); ctx.fill(); ctx.restore();
+
+  if(!blink){
+    ctx.fillStyle="#0a0f1c";
+    ctx.beginPath(); ctx.ellipse(41,30,3.3,4,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(55,30,3.3,4,0,0,Math.PI*2); ctx.fill();
+    cfVan(ctx,42.3,28.4,1.5,"#fff"); cfVan(ctx,39.9,31,0.8,"#fff");
+    cfVan(ctx,56.3,28.4,1.5,"#fff"); cfVan(ctx,53.9,31,0.8,"#fff");
+  } else if(blink==="wink"){
+    ctx.fillStyle="#0a0f1c";
+    ctx.beginPath(); ctx.ellipse(41,30,3.3,4,0,0,Math.PI*2); ctx.fill();
+    cfVan(ctx,42.3,28.4,1.5,"#fff"); cfVan(ctx,39.9,31,0.8,"#fff");
+    ctx.lineWidth=3; ctx.strokeStyle="#0a0f1c"; ctx.lineCap="round";
+    ctx.beginPath(); ctx.arc(55,31,3.5,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+  } else if(blink==="happy"){
+    ctx.lineWidth=3.2; ctx.strokeStyle="#0a0f1c"; ctx.lineCap="round";
+    ctx.beginPath(); ctx.arc(41,31,3.9,0.10*Math.PI,0.90*Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.arc(55,31,3.9,0.10*Math.PI,0.90*Math.PI); ctx.stroke();
+    cfVan(ctx,33.5,35.5,3,"rgba(255,120,120,0.55)");
+    cfVan(ctx,62.5,35.5,3,"rgba(255,120,120,0.55)");
+  } else if(blink==="sad"){
+    ctx.strokeStyle="#0a0f1c"; ctx.lineWidth=2.3; ctx.lineCap="round";
+    ctx.beginPath(); ctx.moveTo(37,24); ctx.lineTo(44.5,27); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(59,24); ctx.lineTo(51.5,27); ctx.stroke();
+    ctx.fillStyle="#0a0f1c";
+    ctx.beginPath(); ctx.ellipse(41,32,2.8,3.1,0,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(55,32,2.8,3.1,0,0,Math.PI*2); ctx.fill();
+    cfVan(ctx,42,30.7,1.1,"#fff"); cfVan(ctx,56,30.7,1.1,"#fff");
+    ctx.fillStyle="#6fd0ff";
+    ctx.beginPath();
+    ctx.moveTo(56,35); ctx.quadraticCurveTo(59,40,56,43.5); ctx.quadraticCurveTo(53,40,56,35);
+    ctx.closePath(); ctx.fill();
+  } else {
+    ctx.lineWidth=3; ctx.strokeStyle="#0a0f1c";
+    ctx.beginPath(); ctx.arc(41,31,3.5,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+    ctx.beginPath(); ctx.arc(55,31,3.5,0.15*Math.PI,0.85*Math.PI); ctx.stroke();
+  }
+  ctx.fillStyle="#0a0f1c";
+  if(blink==="wink"){
+    ctx.beginPath(); ctx.ellipse(48,36,5.6,3.6,0,0,Math.PI); ctx.fill();
+    ctx.fillStyle="#ff7a7a";
+    ctx.beginPath(); ctx.ellipse(48,37.6,2.9,1.7,0,0,Math.PI); ctx.fill();
+  } else if(blink==="happy"){
+    ctx.beginPath(); ctx.ellipse(48,36,6.2,4.2,0,0,Math.PI); ctx.fill();
+    ctx.fillStyle="#ff7a7a";
+    ctx.beginPath(); ctx.ellipse(48,38,3.2,1.9,0,0,Math.PI); ctx.fill();
+  } else if(blink==="sad"){
+    ctx.strokeStyle="#0a0f1c"; ctx.lineWidth=2.4; ctx.lineCap="round";
+    ctx.beginPath(); ctx.arc(48,40,4.2,Math.PI,Math.PI*2); ctx.stroke();
+  } else {
+    ctx.beginPath(); ctx.ellipse(48,36,4.6,3.2,0,0,Math.PI); ctx.fill();
+    ctx.fillStyle="#ff7a7a";
+    ctx.beginPath(); ctx.ellipse(48,37.4,2.4,1.5,0,0,Math.PI); ctx.fill();
+  }
+  ctx.restore();
+}
+
+
+const FMSGS=[
+  'Escolhe um jogo e diverte-te! 🎮',
+  'A UE tem 27 países! 🇪🇺',
+  'Consegues ligar cada país à capital? 🔗',
+  'Pinta as bandeiras e descobre curiosidades! 🎨',
+  'Podes jogar mais do que um jogo! ⭐',
+];
+const bub=document.getElementById('footer-bubble');
+let bubT=null;
+function showBub(msg){bub.textContent=msg;bub.classList.add('show');clearTimeout(bubT);bubT=setTimeout(()=>bub.classList.remove('show'),3500);}
+
+const rob=document.getElementById('footer-vb-robot');
+const ctx=rob.getContext('2d');
+const DPR=Math.min(window.devicePixelRatio||1,3);
+rob.width=96*DPR;rob.height=96*DPR;ctx.scale(DPR,DPR);
+const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let busy=false;
+function frame(blink,step,armsUp){drawVBAtual(ctx,blink,step,armsUp);}
+frame(false,-1,false);
+function blinkNow(){if(busy)return;frame(true,-1,false);setTimeout(()=>{if(!busy)frame(false,-1,false);},180);}
+function walk(steps,speed){
+  steps=steps||6;speed=speed||170;if(busy)return;busy=true;let i=0;
+  const iv=setInterval(()=>{frame(false,i%2===0?0:1,false);i++;if(i>=steps){clearInterval(iv);frame(false,-1,false);busy=false;}},speed);
+}
+function jump(){
+  if(busy)return;busy=true;
+  rob.classList.remove('bounce');void rob.offsetWidth;rob.classList.add('bounce');
+  frame('happy',-1,true);
+  setTimeout(()=>{frame(false,-1,false);busy=false;},700);
+}
+setInterval(()=>{
+  if(busy||document.hidden||REDUCED)return;
+  const r=Math.random();
+  if(r<0.18)jump();else if(r<0.5)walk();else blinkNow();
+},3600);
+function talk(){jump();showBub(FMSGS[Math.floor(Math.random()*FMSGS.length)]);}
+rob.addEventListener('click',talk);
+rob.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();talk();}});
+setTimeout(()=>showBub('Olá! Sou o VanBerto\'s! Escolhe um jogo! 🇪🇺'),900);
+})();
+if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 </script>
 </body>
 </html>
