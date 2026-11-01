@@ -266,6 +266,10 @@ body::before{
 }
 .footer-eu{align-self:center;}
 .footer-vb{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;}
+.modal-footer{padding-right:clamp(84px,17vw,116px);}
+.footer-vb.vb-float{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));z-index:60;pointer-events:none;}
+.footer-vb.vb-float #footer-vb-robot{pointer-events:auto;}
+.footer-vb.vb-float .footer-vb-name{text-shadow:0 1px 6px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.8);}
 #footer-vb-robot{
   width:clamp(56px,11vw,84px);height:auto;display:block;cursor:pointer;
   animation:vbFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 12px #7dd3fc);
@@ -432,21 +436,6 @@ body::before{
   <text x="50" y="65" font-size="9" text-anchor="middle"
         fill="#FFD600" font-family="serif">★ ★ ★</text>
 
-  <!-- VanBerto peeking from bottom-right corner -->
-  <!-- head -->
-  <circle cx="78" cy="80" r="11" fill="white"/>
-  <rect x="71" y="76" width="14" height="7" rx="3.5" fill="#22d3ee"/>
-  <ellipse cx="74" cy="77.5" rx="2.5" ry="1.5" fill="rgba(255,255,255,0.45)"/>
-  <circle cx="74.5" cy="80" r="1.8" fill="#0f172a"/>
-  <circle cx="81.5" cy="80" r="1.8" fill="#0f172a"/>
-  <circle cx="75.2" cy="79.3" r="0.7" fill="white"/>
-  <circle cx="82.2" cy="79.3" r="0.7" fill="white"/>
-  <!-- antenna -->
-  <line x1="78" y1="69" x2="78" y2="64" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
-  <circle cx="78" cy="62.5" r="2.8" fill="#38bdf8"/>
-  <!-- hand pointing at scroll -->
-  <ellipse cx="65" cy="76" rx="4" ry="3" fill="white" stroke="#d1d5db" stroke-width="0.8"
-           transform="rotate(-30 65 76)"/>
 </svg></div>
           <div class="game-info">
             <div class="game-name">Missão UE</div>
@@ -479,27 +468,6 @@ body::before{
   <text x="25" y="41" font-size="7" fill="#fbbf24" font-family="monospace" font-weight="bold">/&gt;</text>
   <rect x="44" y="70" width="12" height="7" rx="2" fill="#334155"/>
   <rect x="36" y="76" width="28" height="5" rx="2.5" fill="#475569"/>
-  <!-- VanBerto larger, bottom-right, more visible -->
-  <!-- body -->
-  <ellipse cx="76" cy="86" rx="11" ry="10" fill="white"/>
-  <!-- belly -->
-  <circle cx="76" cy="88" r="4" fill="#e2e8f0"/>
-  <circle cx="76" cy="88" r="2.5" fill="#94a3b8"/>
-  <!-- head -->
-  <circle cx="76" cy="72" r="10" fill="white"/>
-  <!-- visor -->
-  <rect x="69" y="68" width="14" height="8" rx="4" fill="#22d3ee"/>
-  <ellipse cx="72.5" cy="70" rx="3" ry="1.8" fill="rgba(255,255,255,0.45)"/>
-  <!-- eyes -->
-  <circle cx="72.5" cy="73" r="2" fill="#0f172a"/>
-  <circle cx="79.5" cy="73" r="2" fill="#0f172a"/>
-  <circle cx="73.2" cy="72.2" r="0.8" fill="white"/>
-  <circle cx="80.2" cy="72.2" r="0.8" fill="white"/>
-  <!-- antenna -->
-  <line x1="76" y1="62" x2="76" y2="57" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
-  <circle cx="76" cy="55.5" r="3.5" fill="#38bdf8"/>
-  <!-- left arm pointing at screen -->
-  <ellipse cx="61" cy="76" rx="4" ry="6" fill="white" transform="rotate(30 61 76)"/>
 </svg></div>
           <div class="game-info">
             <div class="game-name">Hora do Código</div>
@@ -735,6 +703,8 @@ document.querySelectorAll('.game-card').forEach((c,i) => {
   window.addEventListener('resize', resizeTrain);
   const W = ()=>cv.width/DPR, H = ()=>cv.height/DPR;
   let t = 0;
+  const WSPD = 7;   // velocidade das rodas; o chão desliza à mesma velocidade (sem derrapar). A frente da locomotiva é a esquerda (chaminé)
+  const TRAIN_REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function S(v){ return v*(H()/500); }
 
@@ -799,7 +769,7 @@ document.querySelectorAll('.game-card').forEach((c,i) => {
   }
 
   function drawGoldenWheel(x,y,r){
-    const wa=t*2.5;
+    const wa=-t*WSPD;
     ctx.save();
     ctx.globalAlpha=0.2;ctx.beginPath();ctx.arc(x,y+S(2),r+S(1),0,Math.PI*2);ctx.fillStyle='#000';ctx.fill();
     ctx.globalAlpha=1;
@@ -982,7 +952,7 @@ document.querySelectorAll('.game-card').forEach((c,i) => {
     drawGoldenWheel(x+wr,y+S(5),wr);
     drawGoldenWheel(x+LW*0.60,y+S(5),wr);
     drawGoldenWheel(x+LW-S(6),y+S(3),wr*0.62);
-    const wa=t*2.5;
+    const wa=-t*WSPD;
     ctx.save();ctx.lineCap='round';
     ctx.strokeStyle='rgba(0,0,0,0.3)';ctx.lineWidth=S(8);
     ctx.beginPath();ctx.moveTo(x+wr+Math.cos(wa)*wr*0.62,y+S(5)+Math.sin(wa)*wr*0.62);ctx.lineTo(x+LW*0.60+Math.cos(wa+Math.PI)*wr*0.62,y+S(5)+Math.sin(wa+Math.PI)*wr*0.62);ctx.stroke();
@@ -998,7 +968,7 @@ document.querySelectorAll('.game-card').forEach((c,i) => {
       const sy=y-prog*S(28);
       const sr=S(5)+prog*S(10);
       ctx.save();ctx.globalAlpha=0.55*(1-prog);
-      ctx.beginPath();ctx.arc(x+(i-1)*S(4),sy,sr,0,Math.PI*2);
+      ctx.beginPath();ctx.arc(x+(i-1)*S(4)+prog*S(46),sy,sr,0,Math.PI*2);
       ctx.fillStyle='rgb(190,205,225)';ctx.fill();ctx.restore();
     }
   }
@@ -1007,7 +977,8 @@ document.querySelectorAll('.game-card').forEach((c,i) => {
     ctx.fillStyle='#475569';ctx.fillRect(0,RAIL_Y+S(2),W(),S(5));
     ctx.fillStyle='#334155';ctx.fillRect(0,RAIL_Y+S(6),W(),S(4));
     ctx.fillStyle='#78350f';
-    for(let dx=4;dx<W();dx+=26){
+    const gap=26, off=(t*WSPD*S(148)*0.21)%gap;   // raio da roda × velocidade angular
+    for(let dx=4+off-gap;dx<W();dx+=gap){
       ctx.beginPath();ctx.roundRect(dx,RAIL_Y,S(12),S(12),S(2));ctx.fill();
     }
   }
@@ -1025,16 +996,19 @@ document.querySelectorAll('.game-card').forEach((c,i) => {
     const w3X=w2X+WW+WG;
     const chX=locoX+LW*0.20;
     const bodyTop=RAIL_Y-LW*0.55+LW*0.06;
-    drawSmoke(chX,bodyTop-LW*0.20);
+    const bob=k=>Math.sin(t*WSPD*1.6-k*0.7)*S(0.9);
     drawRail(RAIL_Y);
-    drawWagon(w3X,wagons[2],RAIL_Y);
-    drawWagon(w2X,wagons[1],RAIL_Y);
-    drawWagon(w1X,wagons[0],RAIL_Y);
+    ctx.save();ctx.translate(0,bob(3));drawWagon(w3X,wagons[2],RAIL_Y);ctx.restore();
+    ctx.save();ctx.translate(0,bob(2));drawWagon(w2X,wagons[1],RAIL_Y);ctx.restore();
+    ctx.save();ctx.translate(0,bob(1));drawWagon(w1X,wagons[0],RAIL_Y);ctx.restore();
+    ctx.save();ctx.translate(0,bob(0));
+    drawSmoke(chX,bodyTop-LW*0.20);
     drawLoco(locoX,RAIL_Y);
+    ctx.restore();
   }
 
   function loop(){ t+=0.018; draw(); requestAnimationFrame(loop); }
-  loop();
+  if(TRAIN_REDUCED){ draw(); window.addEventListener('resize',draw); } else { loop(); }
 })();
 
 
@@ -1262,6 +1236,10 @@ const FMSGS=[
   'Pinta as bandeiras e descobre curiosidades! 🎨',
   'Podes jogar mais do que um jogo! ⭐',
 ];
+// O body tem um filtro animado (bgPulse), que prenderia um elemento «fixed» ao corpo da página.
+// Por isso o VanBerto's flutuante é movido para o <html>, para ficar mesmo fixo no ecrã.
+const fvb=document.querySelector('.footer-vb');
+if(fvb){fvb.classList.add('vb-float');document.documentElement.appendChild(fvb);}
 const bub=document.getElementById('footer-bubble');
 let bubT=null;
 function showBub(msg){bub.textContent=msg;bub.classList.add('show');clearTimeout(bubT);bubT=setTimeout(()=>bub.classList.remove('show'),3500);}
