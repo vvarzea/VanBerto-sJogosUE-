@@ -266,7 +266,16 @@ body::before{
 }
 .footer-eu{align-self:center;}
 .footer-vb{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;}
-.modal-footer{padding-right:clamp(84px,17vw,116px);}
+.modal-footer{padding-right:clamp(84px,17vw,116px);position:relative;flex-wrap:wrap;row-gap:8px;}
+.install-btn{align-self:center;cursor:pointer;white-space:nowrap;font-family:'Nunito',sans-serif;font-weight:800;font-size:clamp(11px,2.9vw,13px);
+  color:#fff;background:linear-gradient(180deg,#2f7df0,#124ab0);border:1px solid rgba(255,255,255,0.28);border-radius:20px;padding:5px 14px;
+  box-shadow:0 2px 10px rgba(18,74,176,0.55);-webkit-tap-highlight-color:transparent;transition:transform .15s;}
+.install-btn:hover{transform:translateY(-1px);} .install-btn:active{transform:scale(.96);}
+.install-btn[hidden],.install-help[hidden]{display:none;}
+.install-help{position:absolute;left:clamp(12px,4vw,22px);bottom:calc(100% + 8px);width:min(280px,calc(100% - 24px));z-index:5;
+  background:rgba(10,20,64,0.97);border:1px solid rgba(255,215,0,0.35);border-radius:14px;padding:10px 12px;
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;line-height:1.45;color:rgba(255,255,255,0.92);box-shadow:0 8px 24px rgba(0,0,0,0.5);}
+.install-help b{color:#ffd54a;}
 .footer-vb.vb-float{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));z-index:60;pointer-events:none;}
 .footer-vb.vb-float #footer-vb-robot{pointer-events:auto;}
 .footer-vb.vb-float .footer-vb-name{text-shadow:0 1px 6px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.8);}
@@ -667,6 +676,8 @@ body::before{
     </div>
     <!-- FOOTER -->
     <div class="modal-footer">
+      <button type="button" class="install-btn" id="installBtn" hidden>📲 Instalar</button>
+      <div class="install-help" id="installHelp" role="status" hidden>Para instalar no iPhone ou iPad: toca em <b>Partilhar</b> ⬆️ e depois em <b>Adicionar ao ecrã principal</b>.</div>
       <span class="footer-sign">© Prof.ª Vanda Várzea</span>
       <span class="footer-eu">🇪🇺</span>
       <div class="footer-vb">
@@ -1375,6 +1386,24 @@ function talk(){jump();showBub(FMSGS[Math.floor(Math.random()*FMSGS.length)]);}
 rob.addEventListener('click',talk);
 rob.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();talk();}});
 setTimeout(()=>showBub('Olá! Sou o VanBerto\'s! Escolhe um jogo! 🇪🇺'),900);
+})();
+// ── Instalar a app (PWA) ──
+(function(){
+  const btn=document.getElementById('installBtn'), help=document.getElementById('installHelp');
+  if(!btn) return;
+  const standalone=(window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+  if(standalone) return;                                   // já está instalada
+  let deferred=null;
+  window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); deferred=e; btn.hidden=false; });
+  window.addEventListener('appinstalled',function(){ deferred=null; btn.hidden=true; help.hidden=true; });
+  const ua=navigator.userAgent||'';
+  const isIOS=/iphone|ipad|ipod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  if(isIOS) btn.hidden=false;                              // o Safari do iOS não tem pedido de instalação: mostra as instruções
+  btn.addEventListener('click',function(){
+    if(deferred){ const d=deferred; deferred=null; d.prompt(); if(d.userChoice) d.userChoice.then(function(){ btn.hidden=true; }); return; }
+    help.hidden=!help.hidden;
+  });
+  document.addEventListener('click',function(e){ if(!help.hidden&&e.target!==btn&&!help.contains(e.target)) help.hidden=true; });
 })();
 if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
 </script>
