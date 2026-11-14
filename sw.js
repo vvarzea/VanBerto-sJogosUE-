@@ -1,4 +1,4 @@
-const CACHE='vanberto-ue-v8';
+const CACHE='vanberto-ue-v11';
 // Essenciais da própria página (se faltar um, a instalação falha).
 const CORE=['./','index.html','manifest.webmanifest','favicon.png','apple-touch-icon.png','icon-128.png','icon-192.png','icon-256.png','icon-512.png','icon-maskable-192.png','icon-maskable-512.png'];
 // Recursos externos do menu (fontes e mapa): guardados em melhor esforço, para o menu abrir também offline.
@@ -6,7 +6,7 @@ const FONT_CSS='https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nuni
 const EXTRA=[FONT_CSS,
   'https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js',
   'https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js',
-  'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json'];
+  'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json'];
 const EXTRA_HOSTS=['fonts.googleapis.com','fonts.gstatic.com','cdn.jsdelivr.net'];
 
 self.addEventListener('install',e=>{e.waitUntil((async()=>{

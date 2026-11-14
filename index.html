@@ -2,11 +2,12 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>VanBerto's — União Europeia 🇪🇺</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Central de Missões do VanBerto's — União Europeia 🇪🇺</title>
 <meta name="theme-color" content="#0d1840">
 <meta name="description" content="Jogos para conheceres os 27 países da União Europeia com o VanBerto's.">
 <link rel="manifest" href="manifest.webmanifest">
+<script>try{if(localStorage.getItem('vb-anim')==='off')document.documentElement.classList.add('no-anim');}catch(e){}</script>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -57,24 +58,56 @@ body::before{
   100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}
 }
 
-/* ── WRAP & CARD ── */
-.modal-wrap{position:relative;z-index:1;width:min(680px,100%);margin:auto 0;}
+/* ══════════ Central de Missões — União Europeia ══════════
+   Mesma estrutura do menu da Cibersegurança (contornos grossos, botões em relevo, secções que abrem e fecham),
+   mas com o azul e o dourado da UE. */
+:where(h1,h2,h3){margin:0;font:inherit;}
+:root{--ink:#010617;--gold:#FFD600;--navy:#0d1840;--navy2:#162a7a;}
+html,body{width:100%;height:100dvh;overflow:hidden;}
+body{
+  display:flex;align-items:center;justify-content:center;
+  height:100dvh;min-height:100dvh;
+  padding:
+    max(min(1.5vh,16px),env(safe-area-inset-top,0px))
+    max(min(1.5vw,16px),env(safe-area-inset-right,0px))
+    max(min(1.5vh,16px),env(safe-area-inset-bottom,0px))
+    max(min(1.5vw,16px),env(safe-area-inset-left,0px));
+  font-family:'Nunito',sans-serif;
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important;}
+  .eu-star{display:none !important;}
+}
+html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none !important;transition:none !important;}
+
+@keyframes vbFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+@keyframes robotPop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-18px) rotate(-6deg)}70%{transform:translateY(-8px) rotate(5deg)}}
+@keyframes cardIn{0%{opacity:0;transform:translateY(14px) scale(.96);}100%{opacity:1;transform:none;}}
+@keyframes titleIn{0%{opacity:0;transform:translateY(-10px) scale(.96);}100%{opacity:1;transform:none;}}
+@keyframes heroBob{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-3px) rotate(-5deg);}}
+
+/* ── CARTÃO PRINCIPAL ── */
+.modal-wrap{
+  position:relative;z-index:1;
+  width:min(98vw,1100px);height:100%;max-height:100%;margin:0;
+  display:flex;flex-direction:column;isolation:isolate;
+}
 .card{
+  flex:1 1 0;min-height:0;width:100%;
+  display:flex;flex-direction:column;overflow:clip;
   background:linear-gradient(155deg,#0d1840,#080e2e);
-  border:2px solid rgba(255,215,0,0.32);
-  border-radius:clamp(16px,4vw,28px);overflow:hidden;
-  box-shadow:0 0 100px rgba(0,60,255,0.20),0 0 50px rgba(255,160,0,0.12),inset 0 1px 0 rgba(255,255,255,0.06);
+  border:3px solid var(--gold);
+  border-radius:clamp(14px,1.6vw,24px);
+  box-shadow:0 6px 0 #8a7000,0 0 70px rgba(0,60,255,.30),0 0 40px rgba(255,160,0,.10);
 }
 
-/* ── HERO ── */
+/* ── CABEÇALHO ── */
 .modal-hero{
+  flex:0 0 auto;position:relative;overflow:hidden;text-align:center;
   background:linear-gradient(160deg,#0a1030,#060c28);
-  padding:clamp(12px,3.5vw,20px) clamp(12px,4vw,24px) clamp(8px,2.5vw,14px);
-  text-align:center;position:relative;overflow:hidden;
-  min-height:clamp(200px,40vw,280px);
+  border-bottom:3px solid var(--gold);
+  padding:min(2vh,20px) min(2.5vw,36px) min(1.4vh,14px);
 }
-.hero-head{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,12px);}
-/* Silhueta Europa no fundo do hero */
 .modal-hero::before{
   content:'';position:absolute;inset:0;pointer-events:none;
   background:
@@ -82,11 +115,6 @@ body::before{
     radial-gradient(ellipse at 20% 80%,rgba(0,80,255,0.16),transparent 60%),
     radial-gradient(ellipse at 85% 75%,rgba(0,150,255,0.08),transparent 55%);
 }
-.hero-map{
-  position:absolute;inset:0;pointer-events:none;
-  overflow:hidden;
-}
-#heroMapSvg{width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease;}
 .modal-hero::after{
   content:'';position:absolute;inset:0;pointer-events:none;
   background-image:
@@ -97,197 +125,263 @@ body::before{
     radial-gradient(1.5px 1.5px at 88% 18%,rgba(255,255,255,0.8),transparent);
   animation:starsTwinkle 4s ease-in-out infinite alternate;
 }
+.hero-map{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+#heroMapSvg{width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease;}
 
-/* ── EU ICON (12 estrelas perfeitas) ── */
+/* Ícone da UE: 12 estrelas num círculo, com relevo */
 .eu-icon{
   position:relative;z-index:1;
-  width:clamp(32px,8vw,42px);height:clamp(32px,8vw,42px);
-  margin:0;flex-shrink:0;
-  animation:euPulse 3s ease-in-out infinite;
+  width:clamp(40px,min(6vw,7vh),58px);height:clamp(40px,min(6vw,7vh),58px);
+  margin:0 auto min(.5vh,6px);
+  filter:drop-shadow(0 4px 0 rgba(0,0,0,.65)) drop-shadow(0 0 10px rgba(255,214,0,.40));
+  animation:heroBob 2.8s ease-in-out infinite;
 }
-.eu-icon svg{width:100%;height:100%;}
-@keyframes euPulse{
-  0%,100%{box-shadow:none;filter:drop-shadow(0 0 6px rgba(255,214,0,0.40));}
-  50%{filter:drop-shadow(0 0 14px rgba(255,214,0,0.75));}
-}
+.eu-icon svg{width:100%;height:100%;display:block;}
 
 .modal-title{
-  font-family:'Fredoka One',cursive;
-  font-size:clamp(16px,4.4vw,26px);color:#FFD600;
-  text-shadow:0 0 14px rgba(0,0,0,0.9),0 2px 0 rgba(0,0,0,0.6);
-  margin:0;position:relative;z-index:1;line-height:1.1;
+  position:relative;z-index:1;
+  font-family:'Fredoka One','Fredoka',cursive;font-weight:400;
+  font-size:clamp(24px,min(3.2vw,4.5vh),42px);line-height:1.15;
+  color:var(--gold);
+  text-shadow:0 3px 0 var(--ink),0 0 18px rgba(0,0,0,.55);
+  margin:0 0 2px;
+  animation:titleIn .6s cubic-bezier(.34,1.56,.64,1) backwards;
 }
+.modal-title-sub{display:block;font-size:.62em;line-height:1.2;margin-top:2px;color:#fff;text-shadow:0 2px 0 var(--ink),0 0 12px rgba(0,0,0,.55);}
 .modal-sub{
-  color:rgba(255,255,255,0.42);font-size:clamp(8px,2vw,10px);
-  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-  margin-bottom:clamp(6px,2vw,10px);position:relative;z-index:1;
+  position:relative;z-index:1;
+  color:#9cc4ff;font-size:clamp(12px,min(1vw,1.4vh),13px);
+  font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
+  margin-bottom:min(.9vh,9px);
+  text-shadow:0 1px 6px rgba(0,0,0,.8);
 }
-
-/* ── MINI STATS ── */
 .hero-stats{
-  display:flex;align-items:center;justify-content:center;
-  gap:clamp(6px,2vw,12px);flex-wrap:wrap;
-  margin-bottom:clamp(8px,2.5vw,12px);position:relative;z-index:1;
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:clamp(4px,.8vw,12px);margin-bottom:min(.3vh,4px);
 }
 .stat-badge{
-  display:inline-flex;align-items:center;gap:4px;
-  background:rgba(255,215,0,0.08);
-  border:1px solid rgba(255,215,0,0.22);
-  border-radius:20px;padding:3px 10px;
-  font-family:'Fredoka One',cursive;
-  font-size:clamp(8px,2vw,10px);color:rgba(255,215,0,0.80);
-  letter-spacing:0.3px;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:4px;white-space:nowrap;
+  background:var(--sc,var(--gold));color:var(--ink);
+  border:2px solid var(--ink);border-radius:20px;box-shadow:0 2px 0 var(--ink);
+  padding:clamp(2px,.4vh,6px) clamp(8px,.9vw,14px);
+  font-family:'Fredoka One','Fredoka',cursive;font-weight:400;
+  font-size:clamp(12px,min(.9vw,1.3vh),13px);letter-spacing:.3px;
+  animation:cardIn .4s cubic-bezier(.34,1.56,.64,1) backwards;
 }
+.stat-badge:nth-child(1){animation-delay:.25s;}
+.stat-badge:nth-child(2){animation-delay:.32s;}
+.stat-badge:nth-child(3){animation-delay:.39s;}
+.stat-badge:nth-child(4){animation-delay:.46s;}
 
-@keyframes vbFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-@keyframes vbBlink{0%,92%,100%{transform:scaleY(0);}95%{transform:scaleY(1);}}
-@keyframes waveVB{0%{transform:rotate(0deg);}25%{transform:rotate(-18deg);}50%{transform:rotate(0deg);}75%{transform:rotate(-18deg);}100%{transform:rotate(0deg);}}
-
-/* ── GAMES SECTION ── */
-.games-section{padding:clamp(4px,1vw,6px) clamp(10px,3vw,16px) clamp(10px,3vw,16px);}
-
-/* Section divider com estrelinhas UE */
-.section-divider{
-  font-family:'Fredoka One',cursive;color:rgba(255,215,0,0.60);
-  font-size:clamp(9px,2.3vw,11px);letter-spacing:1.5px;text-transform:uppercase;
-  margin:clamp(8px,2vw,12px) 0 clamp(6px,2vw,10px);
-  display:flex;align-items:center;gap:8px;
+/* ── LISTA DE JOGOS ── */
+.games-section{
+  flex:1 1 0;min-height:0;
+  display:flex;flex-direction:column;
+  padding:min(1vh,10px) min(1.8vw,24px) clamp(96px,16vh,120px);
+  overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;scrollbar-color:var(--gold) transparent;
 }
-.section-divider:first-child{margin-top:2px;}
-.section-divider::after{
-  content:'★ ★ ★';flex:1;
-  font-size:7px;letter-spacing:4px;
-  color:rgba(255,215,0,0.18);
-  text-align:center;overflow:hidden;
-  display:flex;align-items:center;
-  padding-left:6px;
+.games-section::-webkit-scrollbar{width:6px;}
+.games-section::-webkit-scrollbar-track{background:transparent;}
+.games-section::-webkit-scrollbar-thumb{background:var(--gold);border-radius:10px;}
+
+/* secções que abrem e fecham (só uma aberta de cada vez) */
+.sec{flex-shrink:0;margin:min(1.4vh,12px) 0;--sc:var(--gold);}
+.sec>summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:center;gap:12px;
+  min-height:64px;padding:8px 14px 8px 16px;
+  font-family:'Fredoka One','Fredoka',cursive;font-weight:400;
+  font-size:clamp(16px,1.9vw,21px);letter-spacing:1.6px;text-transform:uppercase;color:#fff;
+  background:#16286f;
+  border:3px solid var(--ink);border-left:14px solid var(--sc);border-radius:18px;
+  box-shadow:0 6px 0 var(--ink);
+  transition:transform .08s,box-shadow .08s,background .15s;
 }
+.sec>summary::-webkit-details-marker{display:none;}
+.sec>summary::marker{content:'';}
+.sec>summary:hover{transform:translateY(-2px);box-shadow:0 8px 0 var(--ink);}
+.sec>summary:active{transform:translateY(4px);box-shadow:0 2px 0 var(--ink);}
+.sec>summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+.sec[open]>summary{background:#24449f;}
+@supports(background:color-mix(in srgb,red 50%,white)){
+  .sec>summary{background:color-mix(in srgb,var(--sc) 10%,#0f1d55);}
+  .sec>summary:hover{background:color-mix(in srgb,var(--sc) 16%,#132668);}
+  .sec[open]>summary{background:color-mix(in srgb,var(--sc) 16%,#24449f);}
+  .sec[open]>summary:hover{background:color-mix(in srgb,var(--sc) 22%,#24449f);}
+}
+.sec-ico{
+  flex:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+  font-size:23px;line-height:1;letter-spacing:0;
+  background:var(--sc);border:3px solid var(--ink);border-radius:50%;box-shadow:0 3px 0 var(--ink);
+}
+.sec-title{flex:1;min-width:0;text-shadow:0 2px 0 var(--ink);}
 .section-count{
-  font-family:'Fredoka One',cursive;font-size:9px;letter-spacing:1px;
-  background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.20);
-  border-radius:20px;padding:2px 8px;color:rgba(255,215,0,0.48);white-space:nowrap;
+  font-family:'Fredoka One','Fredoka',cursive;font-weight:400;font-size:13px;letter-spacing:1px;white-space:nowrap;
+  background:var(--gold);color:var(--ink);border:2px solid var(--ink);border-radius:20px;box-shadow:0 2px 0 var(--ink);
+  padding:4px 12px;text-shadow:none;
 }
+.sec-arrow{
+  flex:none;width:32px;height:32px;display:flex;align-items:center;justify-content:center;
+  background:#fff;color:var(--ink);border:2.5px solid var(--ink);border-radius:50%;box-shadow:0 2px 0 var(--ink);
+  font-size:15px;line-height:1;letter-spacing:0;text-shadow:none;transition:transform .2s;
+}
+.sec[open]>summary .sec-arrow{transform:rotate(180deg);}
+.sec[open]>.games-grid{margin-top:10px;margin-bottom:6px;}
 
-.games-grid{display:grid;gap:clamp(5px,1.5vw,8px);}
+.games-grid{display:grid;gap:clamp(7px,.9vw,14px);flex-shrink:0;}
 .games-grid-1{grid-template-columns:1fr;}
 .games-grid-2{grid-template-columns:repeat(2,1fr);}
-.games-grid-3{grid-template-columns:repeat(3,1fr);}
+.games-grid-2>.game-card:last-child:nth-child(odd){grid-column:1/-1;}
+@media(max-width:480px){.games-grid-2{grid-template-columns:1fr;}}
 
-@media(max-width:340px){
-  .games-grid-2,.games-grid-3{grid-template-columns:1fr;}
-  .destaque-sub{grid-template-columns:1fr;}
-  .game-card.pintar{flex-direction:column;text-align:center;}
-  .game-card.pintar .game-tag{align-self:center;}
-}
-@media(min-width:341px) and (max-width:480px){
-  .games-grid-3{grid-template-columns:repeat(2,1fr);}
-}
-@media(max-width:480px){
-  .modal-title{font-size:clamp(15px,5.5vw,22px);}
-}
-
-/* ── GAME CARD ── */
+/* ── CARTÕES DOS JOGOS ── */
 .game-card{
-  background:rgba(0,51,153,0.10);
-  border:1.5px solid rgba(255,215,0,0.12);
-  border-radius:clamp(12px,3.5vw,16px);
-  padding:clamp(10px,3vw,14px) clamp(6px,2vw,10px) clamp(8px,2.5vw,12px);
-  text-align:center;cursor:pointer;text-decoration:none;
-  display:flex;flex-direction:column;align-items:center;gap:5px;
-  transition:transform 0.22s cubic-bezier(.34,1.56,.64,1),border-color 0.2s,box-shadow 0.2s;
+  --gt:#fff;
   position:relative;overflow:hidden;
+  display:flex;flex-direction:row;align-items:center;gap:clamp(8px,1.2vw,16px);
+  padding:clamp(8px,min(1vw,1.2vh),14px) clamp(10px,1.1vw,16px);
+  text-align:left;text-decoration:none;cursor:pointer;touch-action:manipulation;
+  background:linear-gradient(145deg,#1b2f86,#0d1840);
+  border:3px solid var(--ink);border-radius:18px;
+  box-shadow:0 5px 0 var(--ink);
+  transition:transform .08s,box-shadow .08s;
 }
-.game-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--gc);opacity:0;transition:opacity 0.2s;}
-.game-card:hover{transform:translateY(-4px) scale(1.02);border-color:var(--gc);box-shadow:0 8px 24px var(--gc-glow);}
-.game-card:hover::before{opacity:0.09;}
-.game-card:hover .game-emoji{transform:scale(1.18) rotate(-4deg);}
+@supports(background:color-mix(in srgb,red 50%,white)){
+  .game-card{
+    background:linear-gradient(145deg,color-mix(in srgb,var(--gc) 11%,#1b2f86),#0d1840);
+    border-color:color-mix(in srgb,var(--gc) 50%,var(--ink));
+  }
+}
+.game-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--gc);opacity:.10;transition:opacity .2s;pointer-events:none;}
+@media(hover:hover){
+  .game-card:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--ink),0 0 22px var(--gc-glow);}
+  .game-card:hover::before{opacity:.22;}
+  .game-card:hover .game-icon{transform:scale(1.1) rotate(-4deg);}
+}
+.game-card:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink);}
+.game-card:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+.game-card.played .game-name::after{content:' ✓';color:#4ade80;}
 
-.game-emoji{
-  font-size:clamp(28px,7.5vw,38px);line-height:1;
-  transition:transform 0.22s cubic-bezier(.34,1.56,.64,1);
-  filter:drop-shadow(0 3px 8px rgba(0,0,0,0.4));
+.sec[open]>.games-grid .game-card{animation:cardIn .42s cubic-bezier(.34,1.56,.64,1) backwards;}
+.sec[open]>.games-grid .game-card:nth-child(2){animation-delay:.08s;}
+.sec[open]>.games-grid .game-card:nth-child(3){animation-delay:.16s;}
+.sec[open]>.games-grid .game-card:nth-child(4){animation-delay:.24s;}
+.sec[open]>.games-grid+.games-grid .game-card:nth-child(1){animation-delay:.16s;}
+.sec[open]>.games-grid+.games-grid .game-card:nth-child(2){animation-delay:.24s;}
+
+/* ícone: os desenhos da UE ficam dentro de um «azulejo» em relevo */
+.game-icon{
+  position:relative;z-index:1;flex-shrink:0;
+  width:clamp(48px,6.5vw,72px);height:clamp(48px,6.5vw,72px);
+  border-radius:clamp(9px,1vw,14px);
+  display:flex;align-items:center;justify-content:center;line-height:1;
+  background:#0a1238;
+  border:3px solid var(--ink);
+  box-shadow:0 3px 0 var(--ink),inset 0 2px 6px rgba(255,255,255,.14),inset 0 -5px 10px rgba(0,0,0,.35);
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1);
 }
+@supports(background:color-mix(in srgb,red 50%,white)){
+  .game-icon{background:radial-gradient(circle at 35% 28%,color-mix(in srgb,var(--gc) 50%,#0a1238),#050a24 85%);}
+}
+.card-icon{width:84%;height:84%;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));}
+
+.game-info{position:relative;z-index:1;display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;}
 .game-name{
-  font-family:'Fredoka One',cursive;
-  font-size:clamp(10px,2.6vw,12px);color:rgba(255,255,255,0.90);line-height:1.2;
+  font-family:'Fredoka One','Fredoka',cursive;font-weight:400;
+  font-size:clamp(14px,min(1.1vw,1.5vh),17px);line-height:1.2;color:#fff;
+}
+.game-desc{
+  font-family:'Nunito',sans-serif;font-weight:700;
+  font-size:clamp(12px,min(.85vw,1.1vh),13px);line-height:1.32;color:rgba(255,255,255,.76);
 }
 .game-tag{
-  display:inline-block;background:var(--gc);color:#fff;
-  font-size:clamp(7px,1.8vw,9px);font-weight:900;letter-spacing:0.5px;text-transform:uppercase;
-  padding:3px 9px;border-radius:20px;box-shadow:0 2px 8px var(--gc-glow);margin-top:1px;
+  align-self:flex-start;display:inline-block;margin-top:2px;
+  background:var(--gc);color:var(--gt);
+  border:2px solid var(--ink);border-radius:20px;
+  font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;letter-spacing:.4px;
+  padding:2px 8px;
 }
-.game-tag.gold{background:rgba(255,214,0,0.14);color:#FFD600;border:1px solid rgba(255,214,0,0.38);box-shadow:0 2px 10px rgba(255,214,0,0.22);}
-.game-tag.dark{color:#0d1a00;}
+.games-grid-1 .game-card{padding:clamp(10px,1.3vw,18px) clamp(12px,1.6vw,22px);}
+.games-grid-1 .game-icon{width:clamp(56px,8vw,88px);height:clamp(56px,8vw,88px);}
+.games-grid-1 .game-name{font-size:clamp(16px,min(1.4vw,1.9vh),21px);}
+.games-grid-1 .game-desc{font-size:clamp(12.5px,min(.95vw,1.2vh),14px);}
 
-/* pintar card */
-.game-card.pintar{flex-direction:row;gap:clamp(10px,3vw,16px);padding:clamp(8px,2.5vw,14px) clamp(12px,3.5vw,18px);justify-content:flex-start;text-align:left;}
-.game-card.pintar .game-info{display:flex;flex-direction:column;justify-content:center;gap:3px;flex:1;}
-.destaque-sub .game-card .game-name{color:#ffffff !important;}
-.destaque-sub .game-card .game-desc{color:rgba(255,255,255,0.78) !important;}
-.game-card.pintar .game-desc{font-size:clamp(9px,2.3vw,11px);color:rgba(255,255,255,0.42);font-family:'Nunito',sans-serif;font-weight:700;line-height:1.4;}
-.game-card.pintar .game-tag{align-self:flex-start;}
-.game-card.pintar .game-emoji{font-size:clamp(28px,7.5vw,38px);}
-.game-card.pintar .game-name{font-size:clamp(12px,3.5vw,16px);}
-
-/* ── COMBOIO CARD ── */
-.game-card.comboio{flex-direction:column;padding:0;overflow:hidden;gap:0;text-align:left;}
-.train-canvas{width:100%;height:auto;display:block;background:linear-gradient(180deg,#060c28 0%,#0a1540 100%);}
-.comboio-info{display:flex;flex-direction:column;justify-content:center;gap:5px;padding:clamp(10px,3vw,14px) clamp(12px,3.5vw,18px);flex:1;}
-.comboio-info .game-desc{font-size:clamp(9px,2.3vw,11px);color:rgba(255,255,255,0.45);font-family:'Nunito',sans-serif;font-weight:700;line-height:1.4;}
-
-
-/* ── CARD ICONS (SVG) ── */
-.card-icon{
-  width:clamp(38px,9vw,52px);
-  height:clamp(38px,9vw,52px);
-  flex-shrink:0;
-  filter:drop-shadow(0 3px 10px rgba(0,0,0,0.45));
-  transition:transform 0.22s cubic-bezier(.34,1.56,.64,1);
+@media(max-width:400px){
+  .game-card{flex-direction:column;text-align:center;padding:12px;}
+  .game-info{align-items:center;}
+  .game-tag{align-self:center;}
 }
-.game-icon{
-  display:flex;align-items:center;justify-content:center;
-  line-height:1;
-}
-.game-card:hover .card-icon{transform:scale(1.15) rotate(-4deg);}
-.game-card.pintar .card-icon{width:clamp(32px,8vw,44px);height:clamp(32px,8vw,44px);}
 
-/* ── FOOTER ── */
-.modal-footer{
-  background:rgba(0,0,0,0.28);border-top:1px solid rgba(255,215,0,0.10);
-  padding:clamp(9px,2.5vw,12px) clamp(12px,4vw,22px);
-  display:flex;align-items:center;justify-content:space-between;
+/* comboio em destaque */
+.game-card.comboio{flex-direction:column;align-items:stretch;padding:0;gap:0;overflow:hidden;text-align:center;}
+.game-card.comboio::before{display:none;}
+.train-canvas{width:100%;display:block;background:linear-gradient(180deg,#060c28 0%,#0a1540 100%);border-bottom:3px solid var(--ink);}
+.comboio-info{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 14px 12px;}
+.game-card.comboio .game-name{font-size:clamp(16px,2vw,20px);}
+.comboio-info .game-tag{align-self:center;}
+
+/* ── RODAPÉ DO CARTÃO ── */
+.card-foot{
+  position:relative;flex-shrink:0;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;column-gap:10px;
+  padding:0 0 4px;border-top:2px dotted rgba(255,214,0,.30);
 }
-.footer-credit{font-family:'Fredoka One',cursive;color:rgba(255,255,255,0.28);font-size:clamp(9px,2.3vw,12px);letter-spacing:0.3px;}
-.modal-footer{align-items:flex-end;gap:10px;}
-.footer-sign{
-  align-self:flex-end;display:inline-block;white-space:nowrap;
-  font-family:'Nunito',sans-serif;font-weight:700;font-size:clamp(11px,2.9vw,13px);color:rgba(255,255,255,0.8);
-  background:rgba(10,4,25,0.55);padding:4px 12px;border-radius:20px;border:1px solid rgba(255,255,255,0.10);
+.reset-btn{
+  min-height:40px;margin:2px 0 0;padding:6px 12px;cursor:pointer;
+  background:none;border:none;border-radius:10px;
+  font:700 12px 'Nunito',sans-serif;color:rgba(255,255,255,.78);
+  text-decoration:underline;text-underline-offset:3px;
 }
-.footer-eu{align-self:center;}
-.footer-vb{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;}
-.modal-footer{padding-right:clamp(84px,17vw,116px);position:relative;flex-wrap:wrap;row-gap:8px;}
-.install-btn{align-self:center;cursor:pointer;white-space:nowrap;font-family:'Nunito',sans-serif;font-weight:800;font-size:clamp(11px,2.9vw,13px);
-  color:#fff;background:linear-gradient(180deg,#2f7df0,#124ab0);border:1px solid rgba(255,255,255,0.28);border-radius:20px;padding:5px 14px;
-  box-shadow:0 2px 10px rgba(18,74,176,0.55);-webkit-tap-highlight-color:transparent;transition:transform .15s;}
-.install-btn:hover{transform:translateY(-1px);} .install-btn:active{transform:scale(.96);}
+.reset-btn:hover{color:#fff;background:rgba(255,214,0,.22);}
+.reset-btn:active{background:rgba(255,214,0,.36);}
+.reset-btn:focus-visible{outline:3px solid var(--gold);}
+.reset-btn[hidden]{display:none;}
+
+.install-btn{
+  align-self:center;margin-top:2px;cursor:pointer;white-space:nowrap;
+  font-family:'Nunito',sans-serif;font-weight:800;font-size:12px;color:#fff;
+  background:linear-gradient(180deg,#2f7df0,#124ab0);
+  border:2.5px solid var(--ink);border-radius:20px;padding:5px 14px;box-shadow:0 3px 0 var(--ink);
+  transition:transform .08s,box-shadow .08s;
+}
+.install-btn:active{transform:translateY(3px);box-shadow:none;}
+.install-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
 .install-btn[hidden],.install-help[hidden]{display:none;}
-.install-help{position:absolute;left:clamp(12px,4vw,22px);bottom:calc(100% + 8px);width:min(280px,calc(100% - 24px));z-index:5;
-  background:rgba(10,20,64,0.97);border:1px solid rgba(255,215,0,0.35);border-radius:14px;padding:10px 12px;
-  font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;line-height:1.45;color:rgba(255,255,255,0.92);box-shadow:0 8px 24px rgba(0,0,0,0.5);}
-.install-help b{color:#ffd54a;}
-.footer-vb.vb-float{position:fixed;right:max(10px,env(safe-area-inset-right));bottom:max(10px,env(safe-area-inset-bottom));z-index:60;pointer-events:none;}
-.footer-vb.vb-float #footer-vb-robot{pointer-events:auto;}
-.footer-vb.vb-float .footer-vb-name{text-shadow:0 1px 6px rgba(0,0,0,.9),0 0 10px rgba(0,0,0,.8);}
-#footer-vb-robot{
-  width:clamp(56px,11vw,84px);height:auto;display:block;cursor:pointer;
-  animation:vbFloat 3s ease-in-out infinite;filter:drop-shadow(0 0 12px #7dd3fc);
+.install-help{
+  position:absolute;left:12px;bottom:calc(100% + 8px);z-index:5;width:min(280px,calc(100% - 24px));text-align:left;
+  background:#0d1840;border:3px solid var(--ink);border-radius:14px;box-shadow:0 4px 0 var(--ink);padding:10px 12px;
+  font-family:'Nunito',sans-serif;font-weight:700;font-size:12px;line-height:1.45;color:rgba(255,255,255,.94);
 }
-#footer-vb-robot:focus-visible{outline:3px solid #ffd700;outline-offset:4px;border-radius:12px;}
-#footer-vb-robot:hover{filter:drop-shadow(0 0 24px #38bdf8);}
+.install-help b{color:#ffd54a;}
+
+#prof-tag{
+  position:absolute;left:calc(1.1rem + env(safe-area-inset-left,0px));bottom:calc(.6rem + env(safe-area-inset-bottom,0px));
+  z-index:50;pointer-events:none;
+  font-size:12px;font-weight:700;color:#fff;
+  background:#0d1840;border:2px solid var(--gold);border-radius:20px;box-shadow:0 2px 0 var(--ink);
+  padding:3px 10px;
+}
+
+/* ── MASCOTE VANBERTO'S ── */
+.footer-vb{
+  position:absolute;z-index:600;
+  bottom:calc(.5rem + env(safe-area-inset-bottom,0px));right:calc(.5rem + env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none;
+}
+#footer-vb-robot{
+  width:clamp(60px,8vw,88px);height:auto;display:block;cursor:pointer;pointer-events:auto;
+  animation:vbFloat 3s ease-in-out infinite;
+  filter:drop-shadow(0 4px 0 rgba(0,0,0,.45)) drop-shadow(0 0 12px #7dd3fc);
+}
+#footer-vb-robot:hover{filter:drop-shadow(0 4px 0 rgba(0,0,0,.45)) drop-shadow(0 0 22px #38bdf8);}
+#footer-vb-robot:focus-visible{outline:3px solid var(--gold);outline-offset:4px;border-radius:12px;}
 #footer-vb-robot.bounce{animation:robotPop .65s cubic-bezier(.34,1.56,.64,1),vbFloat 3s ease-in-out .65s infinite;}
-@keyframes robotPop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-18px) rotate(-6deg)}70%{transform:translateY(-8px) rotate(5deg)}}
-.footer-vb-name{font-family:'Fredoka One',cursive;color:#ffa733;font-size:clamp(10px,2.6vw,12px);line-height:1.2;text-shadow:0 1px 6px rgba(0,0,0,.8),0 0 10px rgba(236,30,121,.4);}
+.footer-vb-name{
+  font-family:'Fredoka One','Fredoka',cursive;font-size:clamp(.58rem,1.3vw,.7rem);line-height:1.3;
+  color:var(--ink);background:var(--gold);border:2px solid var(--ink);border-radius:999px;box-shadow:0 2px 0 var(--ink);padding:0 8px;
+}
 #footer-bubble{
   --bc:#dcebff;position:absolute;right:0;bottom:calc(100% + 4px);z-index:20;
   background:linear-gradient(135deg,var(--bc),#fff);
@@ -301,8 +395,24 @@ body::before{
 #footer-bubble::after{content:"";position:absolute;bottom:-14px;right:22px;border-left:10px solid transparent;border-right:10px solid transparent;border-top:14px solid #0f172a;}
 #footer-bubble::before{content:"";position:absolute;bottom:-9px;right:24px;border-left:8px solid transparent;border-right:8px solid transparent;border-top:11px solid var(--bc);z-index:1;}
 #footer-bubble.show{opacity:1;transform:translateY(0) scale(1);}
-@media(max-width:480px){#footer-vb-robot{width:54px;}#footer-bubble{max-width:150px;font-size:.7rem;}}
-@media(prefers-reduced-motion:reduce){#footer-vb-robot{animation:none;}}
+
+/* ── ECRÃS PEQUENOS ── */
+@media(max-width:480px){
+  #footer-vb-robot{width:54px;}
+  #footer-bubble{max-width:150px;font-size:.7rem;}
+}
+@media(max-width:700px){
+  #prof-tag{position:static;align-self:center;margin-top:8px;flex-shrink:0;}
+  .games-section{padding-bottom:70px;}
+  .card-foot{padding-right:66px;padding-left:6px;}
+  .reset-btn{padding:6px 8px;}
+}
+/* ecrã deitado baixo (telemóvel): cabeçalho mínimo */
+@media(max-height:500px){
+  .eu-icon,.hero-stats,.modal-sub{display:none;}
+  .modal-hero{padding:6px 16px;}
+}
+@media (hover:none){.game-card:hover,.sec>summary:hover{transform:none;}}
 </style>
 </head>
 <body>
@@ -315,20 +425,11 @@ body::before{
 <div class="eu-star" style="left:85%;animation-duration:11s;animation-delay:4s;">★</div>
 
 <div class="modal-wrap">
-  <div class="card">
+  <main class="card">
 
-    <!-- HERO -->
     <div class="modal-hero">
-
-      <!-- Mapa Europa real (D3 + Natural Earth) -->
-      <div class="hero-map">
-        <svg id="heroMapSvg" xmlns="http://www.w3.org/2000/svg"></svg>
-      </div>
-
-      <div class="hero-head">
-      <!-- EU Icon — 12 estrelas com trigonometria perfeita -->
-      <div class="eu-icon">
-        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+      <div class="hero-map" aria-hidden="true"><svg id="heroMapSvg" xmlns="http://www.w3.org/2000/svg"></svg></div>
+      <div class="eu-icon" aria-hidden="true"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="euBg" cx="50%" cy="40%" r="55%">
               <stop offset="0%" stop-color="#0a3cba"/>
@@ -358,33 +459,16 @@ body::before{
           </g>
           <!-- Brilho -->
           <ellipse cx="22" cy="15" rx="10" ry="6" fill="rgba(255,255,255,0.08)"/>
-        </svg>
-      </div>
-
-      <div class="modal-title">VanBerto's — União Europeia</div>
-      </div>
+        </svg></div>
+      <h1 class="modal-title">Central de Missões do VanBerto's<span class="modal-title-sub">União Europeia</span></h1>
+      <div class="modal-sub"><span id="total-a">10</span> jogos — escolhe a tua missão</div>
+      <div class="hero-stats"><span class="stat-badge" style="--sc:#FFD600;">🚂 Destaque</span><span class="stat-badge" style="--sc:#4d8dff;">🗺️ Exploração</span><span class="stat-badge" style="--sc:#ff8a3d;">🎮 Quiz & Palavras</span><span class="stat-badge" style="--sc:#2dd4bf;">🎨 Criativo</span></div>
     </div>
 
-    <!-- JOGOS -->
-    <div class="games-section">
-
-      <!-- 🚂 DESTAQUE -->
-      <div class="section-divider">🚂 Destaque <span class="section-count">3 jogos</span></div>
-      <!-- Comboio full width -->
-      <div class="games-grid games-grid-1">
-        <a class="game-card comboio" href="https://vvarzea.github.io/VanBerto-s-Comboio-Bandeira-UE/" target="_blank"
-           style="--gc:#FFD600;--gc-glow:rgba(255,214,0,0.35);">
-          <canvas id="trainCanvas" class="train-canvas"></canvas>
-          <div class="comboio-info">
-            <div class="game-name" style="font-size:clamp(13px,3.8vw,17px);">Comboio Bandeira UE</div>
-          </div>
-        </a>
-      </div>
-      <!-- Missão UE + Hora do Código side by side -->
-      <div class="games-grid games-grid-2 destaque-sub" style="margin-top:clamp(8px,2vw,14px);">
-        <a class="game-card pintar" href="https://vvarzea.github.io/VanBerto-s-Miss-o-UE/" target="_blank"
-           style="--gc:#e63946;--gc-glow:rgba(230,57,70,0.40);">
-          <div class="game-icon"><svg class="card-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <div class="games-section" id="games">
+      <details class="sec" name="sec" open style="--sc:#FFD600;">
+        <summary><span class="sec-ico" aria-hidden="true">🚂</span><span class="sec-title">Destaque</span><span class="section-count">3 jogos</span><span class="sec-arrow" aria-hidden="true">▼</span></summary>
+        <div class="games-grid games-grid-1"><a class="game-card comboio" data-id="comboio" href="https://vvarzea.github.io/VanBerto-s-Comboio-Bandeira-UE/" rel="noopener" style="--gc:#FFD600;--gc-glow:rgba(255,214,0,0.35);--gt:#010617;"><canvas id="trainCanvas" class="train-canvas" aria-hidden="true"></canvas><div class="comboio-info"><h3 class="game-name">Comboio Bandeira UE</h3><div class="game-desc">Embarca no comboio e descobre as bandeiras e as capitais dos países da UE.</div><span class="game-tag">Bandeiras e capitais</span></div></a></div><div class="games-grid games-grid-2"><a class="game-card" data-id="missao" href="https://vvarzea.github.io/VanBerto-s-Missao-UE/" rel="noopener" style="--gc:#e63946;--gc-glow:rgba(230,57,70,0.40);--gt:#010617;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="hbg" cx="40%" cy="35%" r="70%">
       <stop offset="0%" stop-color="#1a3a8a"/>
@@ -444,14 +528,7 @@ body::before{
   <text x="50" y="65" font-size="9" text-anchor="middle"
         fill="#FFD600" font-family="serif">★ ★ ★</text>
 
-</svg></div>
-          <div class="game-info">
-            <div class="game-name">Missão UE</div>
-          </div>
-        </a>
-        <a class="game-card pintar" href="https://vvarzea.github.io/VanBerto-s-UE-Codigo/" target="_blank"
-           style="--gc:#16a34a;--gc-glow:rgba(22,163,74,0.45);">
-          <div class="game-icon"><svg class="card-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+</svg></div><div class="game-info"><h3 class="game-name">Missão UE</h3><div class="game-desc">Parte em missão pela União Europeia e supera todos os desafios.</div><span class="game-tag">Aventura</span></div></a><a class="game-card" data-id="codigo" href="https://vvarzea.github.io/VanBerto-s-UE-Codigo/" rel="noopener" style="--gc:#16a34a;--gc-glow:rgba(22,163,74,0.45);--gt:#010617;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="ig_cod_bg" cx="40%" cy="35%" r="70%">
       <stop offset="0%" stop-color="#166534"/>
@@ -475,20 +552,11 @@ body::before{
   <text x="25" y="41" font-size="7" fill="#fbbf24" font-family="monospace" font-weight="bold">/&gt;</text>
   <rect x="44" y="70" width="12" height="7" rx="2" fill="#334155"/>
   <rect x="36" y="76" width="28" height="5" rx="2.5" fill="#475569"/>
-</svg></div>
-          <div class="game-info">
-            <div class="game-name">Hora do Código</div>
-          </div>
-        </a>
-      </div>
-
-      <!-- 🗺️ EXPLORAÇÃO -->
-      <div class="section-divider">🗺️ Exploração <span class="section-count">4 jogos</span></div>
-      <div class="games-grid games-grid-2">
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-UE-QUIZ/" target="_blank"
-           style="--gc:#6c3be0;--gc-glow:rgba(108,59,224,0.50);">
-          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+</svg></div><div class="game-info"><h3 class="game-name">Hora do Código</h3><div class="game-desc">Guia o robô pela grelha e programa-o para cumprir a missão.</div><span class="game-tag">Programação</span></div></a></div>
+      </details>
+      <details class="sec" name="sec" style="--sc:#4d8dff;">
+        <summary><span class="sec-ico" aria-hidden="true">🗺️</span><span class="sec-title">Exploração</span><span class="section-count">4 jogos</span><span class="sec-arrow" aria-hidden="true">▼</span></summary>
+        <div class="games-grid games-grid-2"><a class="game-card" data-id="quiz" href="https://vvarzea.github.io/VanBerto-s-UE-QUIZ/" rel="noopener" style="--gc:#6c3be0;--gc-glow:rgba(108,59,224,0.50);--gt:#ffffff;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="ig_quizexp" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#3d1a8f"/>
@@ -499,13 +567,7 @@ body::before{
   <rect x="10" y="10" width="28" height="22" rx="6" fill="rgba(255,214,0,0.15)" stroke="#FFD600" stroke-width="1.5"/>
   <polygon points="14,32 10,40 22,32" fill="#FFD600" opacity=".7"/>
   <text x="24" y="24" fill="#FFD600" font-size="18" font-weight="900" text-anchor="middle" dominant-baseline="central" font-family="Fredoka One,cursive">?</text>
-</svg></div>
-          <div class="game-name">Quiz UE</div>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-sUEMapa-/" target="_blank"
-           style="--gc:#0891b2;--gc-glow:rgba(8,145,178,0.50);">
-          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+</svg></div><div class="game-info"><h3 class="game-name">Quiz UE</h3><div class="game-desc">Responde às perguntas e testa o que sabes sobre a União Europeia.</div><span class="game-tag">Quiz</span></div></a><a class="game-card" data-id="mapa" href="https://vvarzea.github.io/VanBerto-sUEMapa-/" rel="noopener" style="--gc:#0891b2;--gc-glow:rgba(8,145,178,0.50);--gt:#010617;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <radialGradient id="ig_mapa" cx="40%" cy="35%" r="65%">
       <stop offset="0%" stop-color="#4a7fff"/>
@@ -521,13 +583,7 @@ body::before{
   <circle cx="24" cy="20" r="4" fill="#fff" opacity=".95"/>
   <circle cx="24" cy="20" r="2" fill="#003399"/>
   <line x1="24" y1="24" x2="24" y2="30" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-</svg></div>
-          <div class="game-name">Coloca no Mapa</div>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Advinha-Capital-UE/" target="_blank"
-           style="--gc:#ea580c;--gc-glow:rgba(234,88,12,0.50);">
-          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+</svg></div><div class="game-info"><h3 class="game-name">Coloca no Mapa</h3><div class="game-desc">Coloca cada país no sítio certo do mapa da Europa.</div><span class="game-tag">Mapa da UE</span></div></a><a class="game-card" data-id="capital" href="https://vvarzea.github.io/VanBerto-s-Advinha-Capital-UE/" rel="noopener" style="--gc:#ea580c;--gc-glow:rgba(234,88,12,0.50);--gt:#010617;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="ig_cap" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#1a55e0"/>
@@ -550,13 +606,7 @@ body::before{
   <!-- Bandeirinha -->
   <line x1="24" y1="8" x2="24" y2="13" stroke="#FFD600" stroke-width="1.5"/>
   <polygon points="24,8 29,10 24,12" fill="#FFD600"/>
-</svg></div>
-          <div class="game-name">Adivinha a Capital</div>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-Ligar-as-Capitais-UE/" target="_blank"
-           style="--gc:#db2777;--gc-glow:rgba(219,39,119,0.50);">
-          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+</svg></div><div class="game-info"><h3 class="game-name">Adivinha a Capital</h3><div class="game-desc">Descobre a capital de cada país da União Europeia.</div><span class="game-tag">27 capitais</span></div></a><a class="game-card" data-id="liga" href="https://vvarzea.github.io/VanBerto-s-Ligar-as-Capitais-UE/" rel="noopener" style="--gc:#db2777;--gc-glow:rgba(219,39,119,0.50);--gt:#ffffff;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="ig_liga" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#2060e0"/>
@@ -575,19 +625,11 @@ body::before{
   <!-- Estrelinhas UE -->
   <text x="15" y="26" fill="#FFD600" font-size="6" text-anchor="middle" dominant-baseline="central">★</text>
   <text x="33" y="26" fill="#FFD600" font-size="6" text-anchor="middle" dominant-baseline="central">★</text>
-</svg></div>
-          <div class="game-name">Liga o Par</div>
-        </a>
-
-      </div>
-
-      <!-- 🎮 QUIZ & PALAVRAS -->
-      <div class="section-divider">🎮 Quiz &amp; Palavras <span class="section-count">2 jogos</span></div>
-      <div class="games-grid games-grid-2">
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-UEPalavrasCruzadas/" target="_blank"
-           style="--gc:#FFD600;--gc-glow:rgba(255,214,0,0.35);">
-          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+</svg></div><div class="game-info"><h3 class="game-name">Liga o Par</h3><div class="game-desc">Liga cada país à sua capital e forma todos os pares.</div><span class="game-tag">Países e capitais</span></div></a></div>
+      </details>
+      <details class="sec" name="sec" style="--sc:#ff8a3d;">
+        <summary><span class="sec-ico" aria-hidden="true">🎮</span><span class="sec-title">Quiz & Palavras</span><span class="section-count">2 jogos</span><span class="sec-arrow" aria-hidden="true">▼</span></summary>
+        <div class="games-grid games-grid-2"><a class="game-card" data-id="cruzadas" href="https://vvarzea.github.io/VanBerto-s-UEPalavrasCruzadas/" rel="noopener" style="--gc:#FFD600;--gc-glow:rgba(255,214,0,0.35);--gt:#010617;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="ig_cruz" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#b8960a"/>
@@ -608,13 +650,7 @@ body::before{
   <!-- Lápis -->
   <line x1="34" y1="14" x2="42" y2="6" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
   <polygon points="34,14 38,10 42,6 40,8 36,12" fill="white" opacity=".9"/>
-</svg></div>
-          <div class="game-name">Palavras Cruzadas</div>
-        </a>
-
-        <a class="game-card" href="https://vvarzea.github.io/VanBerto-s-UESopadeLetras/" target="_blank"
-           style="--gc:#c0300a;--gc-glow:rgba(192,48,10,0.50);">
-          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+</svg></div><div class="game-info"><h3 class="game-name">Palavras Cruzadas</h3><div class="game-desc">Resolve as pistas e preenche a grelha, letra a letra.</div><span class="game-tag">Palavras da UE</span></div></a><a class="game-card" data-id="sopa" href="https://vvarzea.github.io/VanBerto-s-UESopadeLetras/" rel="noopener" style="--gc:#c0300a;--gc-glow:rgba(192,48,10,0.50);--gt:#ffffff;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="ig_sopa" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#c0300a"/>
@@ -632,18 +668,11 @@ body::before{
   <!-- Letra destacada -->
   <circle cx="26" cy="22" r="5" fill="rgba(255,214,0,0.15)"/>
   <text x="26" y="23" fill="#FFD600" font-size="7" font-weight="900" text-anchor="middle" dominant-baseline="central" font-family="Fredoka One,cursive">EU</text>
-</svg></div>
-          <div class="game-name">Sopa de Letras</div>
-        </a>
-
-      </div>
-
-      <!-- 🎨 CRIATIVO -->
-      <div class="section-divider">🎨 Criativo <span class="section-count">1 jogo</span></div>
-      <div class="games-grid games-grid-1">
-        <a class="game-card pintar" href="https://vvarzea.github.io/VanBerto-s-Pintar-Bandeira-/" target="_blank"
-           style="--gc:#00BCD4;--gc-glow:rgba(0,188,212,0.40);">
-          <div class="game-icon"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+</svg></div><div class="game-info"><h3 class="game-name">Sopa de Letras</h3><div class="game-desc">Encontra as palavras escondidas sobre a União Europeia.</div><span class="game-tag">Palavras da UE</span></div></a></div>
+      </details>
+      <details class="sec" name="sec" style="--sc:#2dd4bf;">
+        <summary><span class="sec-ico" aria-hidden="true">🎨</span><span class="sec-title">Criativo</span><span class="section-count">1 jogo</span><span class="sec-arrow" aria-hidden="true">▼</span></summary>
+        <div class="games-grid games-grid-1"><a class="game-card" data-id="pintar" href="https://vvarzea.github.io/VanBerto-s-Pintar-Bandeira-/" rel="noopener" style="--gc:#00BCD4;--gc-glow:rgba(0,188,212,0.40);--gt:#010617;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="ig_pint" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#007a99"/>
@@ -662,37 +691,26 @@ body::before{
   <!-- Pincel -->
   <line x1="22" y1="32" x2="10" y2="12" stroke="#FFD600" stroke-width="2.5" stroke-linecap="round"/>
   <ellipse cx="10" cy="11" rx="3" ry="2" fill="#FFD600" transform="rotate(-30 10 11)"/>
-</svg></div>
-          <div class="game-info">
-            <div class="game-name">Pinta a Bandeira</div>
-          </div>
-        </a>
-      </div>
-
+</svg></div><div class="game-info"><h3 class="game-name">Pinta a Bandeira</h3><div class="game-desc">Pinta as bandeiras com as cores certas e descobre curiosidades.</div><span class="game-tag">Bandeiras</span></div></a></div>
+      </details>
     </div>
-    <!-- FOOTER -->
-    <div class="modal-footer">
+
+    <div class="card-foot" id="card-foot">
       <button type="button" class="install-btn" id="installBtn" hidden>📲 Instalar</button>
       <div class="install-help" id="installHelp" role="status" hidden>Para instalar no iPhone ou iPad: toca em <b>Partilhar</b> ⬆️ e depois em <b>Adicionar ao ecrã principal</b>.</div>
-      <span class="footer-sign">© Prof.ª Vanda Várzea</span>
-      <span class="footer-eu">🇪🇺</span>
-      <div class="footer-vb">
-        <div id="footer-bubble" role="status" aria-live="polite"></div>
-        <canvas id="footer-vb-robot" width="96" height="96" role="button" tabindex="0" aria-label="VanBerto's — clica para falar"></canvas>
-        <span class="footer-vb-name">VanBerto's</span>
-      </div>
+      <button type="button" class="reset-btn" id="resetBtn" hidden>↺ Recomeçar (limpar os ✓)</button>
+      <button type="button" class="reset-btn" id="animBtn" aria-pressed="false">⏸ Pausar animações</button>
     </div>
-
+  </main>
+  <div class="footer-vb" role="complementary" aria-label="Mascote VanBerto's">
+    <div id="footer-bubble" role="status" aria-live="polite"></div>
+    <canvas id="footer-vb-robot" width="96" height="96" role="button" tabindex="0" aria-label="VanBerto's — clica para falar"></canvas>
+    <span class="footer-vb-name">VanBerto's</span>
   </div>
+  <footer id="prof-tag">© Prof.ª Vanda Várzea</footer>
 </div>
 
 <script>
-document.querySelectorAll('.game-card').forEach((c,i) => {
-  c.style.opacity='0'; c.style.transform='translateY(12px)';
-  c.style.transition=`opacity 0.4s ${i*0.07}s, transform 0.4s ${i*0.07}s cubic-bezier(.34,1.56,.64,1), box-shadow 0.2s, border-color 0.2s`;
-  setTimeout(()=>{ c.style.opacity='1'; c.style.transform='translateY(0)'; }, 80+i*60);
-});
-
 // ── COMBOIO CANVAS ──────────────────────────────────────────────────────────
 (function(){
   // Este comboio é o MESMO do jogo «Países da União Europeia»: o código da locomotiva, dos vagões, das rodas,
@@ -1070,7 +1088,7 @@ document.querySelectorAll('.game-card').forEach((c,i) => {
 
   function resizeTrain(){
     const w = cv.parentElement.clientWidth||660;
-    U = Math.min(0.55, 0.88*w/474);            // o comboio (locomotiva + 3 vagões) nunca passa de 88% da largura
+    U = Math.min(0.55, 0.88*w/474, Math.max(56,innerHeight*0.17)/168);            // o comboio (locomotiva + 3 vagões) nunca passa de 88% da largura
     W = w; H = Math.round(168*U);
     cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
     cv.style.width = W+'px'; cv.style.height = H+'px';
@@ -1080,6 +1098,7 @@ document.querySelectorAll('.game-card').forEach((c,i) => {
     _flagCache={};
   }
   resizeTrain();
+  if(window.ResizeObserver)new ResizeObserver(function(){resizeTrain();pausedKey='';if(TRAIN_REDUCED||document.documentElement.classList.contains('no-anim'))draw();}).observe(cv.parentElement);
   window.addEventListener('resize', ()=>{ resizeTrain(); if(TRAIN_REDUCED) draw(); });
 
   function drawRail(){
@@ -1107,7 +1126,11 @@ document.querySelectorAll('.game-card').forEach((c,i) => {
     ctx.restore();
   }
 
+  let pausedKey='';
   function frame(){
+    if(document.hidden||!cv.offsetParent){requestAnimationFrame(frame);return;}
+    if(document.documentElement.classList.contains('no-anim')){const k=cv.width+'x'+cv.height;if(pausedKey!==k){draw();pausedKey=k;}requestAnimationFrame(frame);return;}
+    pausedKey='';
     bgTime += 0.016;
     wheelAngle += 0.075;                         // rodas a rodar para a frente (o comboio segue para a direita)
     const v = 0.075*LW*0.14;                     // velocidade do chão = velocidade das rodas (sem derrapar)
@@ -1171,7 +1194,7 @@ async function drawHeroMap(){
   const proj = d3.geoMercator().center([14,47]).scale(Math.min(W*0.5,H*1.1)).translate([W*0.5,H*0.58]);
   const path = d3.geoPath().projection(proj);
   try {
-    const world = window._worldData || await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json');
+    const world = window._worldData || await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json');
     window._worldData = world;
     const feats = euroFeatures(topojson.feature(world, world.objects.countries));
     svg.append('g').selectAll('path').data(feats.filter(f=>!isEU(f))).join('path')
@@ -1187,7 +1210,9 @@ async function drawHeroMap(){
 window.addEventListener('load', () => {
   setTimeout(drawHeroMap, 50);
 });
-let _rsT;window.addEventListener('resize',()=>{clearTimeout(_rsT);_rsT=setTimeout(drawHeroMap,200);});
+let _rsT;const _redrawMap=()=>{clearTimeout(_rsT);_rsT=setTimeout(drawHeroMap,200);};
+window.addEventListener('resize',_redrawMap);
+if(window.ResizeObserver)new ResizeObserver(_redrawMap).observe(document.querySelector('.modal-hero'));
 </script>
 <script>
 // ── VANBERTO'S ATUAL (rodapé) ─────────────────────────────────────────────
@@ -1340,16 +1365,12 @@ function drawVBAtual(ctx,blink,step,armsUp){
 
 window.drawVBAtual=drawVBAtual;   // o comboio do cartão usa o mesmo VanBerto's na janela
 const FMSGS=[
-  'Escolhe um jogo e diverte-te! 🎮',
+  'Escolhe uma missão e diverte-te! 🎮',
   'A UE tem 27 países! 🇪🇺',
   'Consegues ligar cada país à capital? 🔗',
   'Pinta as bandeiras e descobre curiosidades! 🎨',
   'Podes jogar mais do que um jogo! ⭐',
 ];
-// O body tem um filtro animado (bgPulse), que prenderia um elemento «fixed» ao corpo da página.
-// Por isso o VanBerto's flutuante é movido para o <html>, para ficar mesmo fixo no ecrã.
-const fvb=document.querySelector('.footer-vb');
-if(fvb){fvb.classList.add('vb-float');document.documentElement.appendChild(fvb);}
 const bub=document.getElementById('footer-bubble');
 let bubT=null;
 function showBub(msg){bub.textContent=msg;bub.classList.add('show');clearTimeout(bubT);bubT=setTimeout(()=>bub.classList.remove('show'),3500);}
@@ -1374,15 +1395,25 @@ function jump(){
   setTimeout(()=>{frame(false,-1,false);busy=false;},700);
 }
 setInterval(()=>{
-  if(busy||document.hidden||REDUCED)return;
+  if(busy||document.hidden||REDUCED||document.documentElement.classList.contains('no-anim'))return;
   const r=Math.random();
   if(r<0.18)jump();else if(r<0.5)walk();else blinkNow();
 },3600);
 function talk(){jump();showBub(FMSGS[Math.floor(Math.random()*FMSGS.length)]);}
+window.__vbSay=function(m){jump();showBub(m);};
 rob.addEventListener('click',talk);
 rob.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();talk();}});
-setTimeout(()=>showBub('Olá! Sou o VanBerto\'s! Escolhe um jogo! 🇪🇺'),900);
+setTimeout(()=>showBub('Olá! Sou o VanBerto\'s! Escolhe a tua missão! 🇪🇺'),900);
 })();
+// ── Jogos precisam de internet: aviso simpático em vez do erro do navegador ──
+document.querySelectorAll('a.game-card').forEach(function(a){
+  a.addEventListener('click',function(e){
+    if(navigator.onLine===false){
+      e.preventDefault();
+      if(window.__vbSay) window.__vbSay('Este jogo precisa de internet. Liga-te e tenta outra vez! 📶');
+    }
+  });
+});
 // ── Instalar a app (PWA) ──
 (function(){
   const btn=document.getElementById('installBtn'), help=document.getElementById('installHelp');
@@ -1402,6 +1433,32 @@ setTimeout(()=>showBub('Olá! Sou o VanBerto\'s! Escolhe um jogo! 🇪🇺'),900
   document.addEventListener('click',function(e){ if(!help.hidden&&e.target!==btn&&!help.contains(e.target)) help.hidden=true; });
 })();
 if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}
+</script>
+
+<script>
+// ── Central de Missões: ✓ jogados, Recomeçar, Pausar animações, uma secção aberta de cada vez ──
+(function(){
+  const box=document.getElementById('games');
+  const total=box.querySelectorAll('.game-card').length;
+  const t=document.getElementById('total-a'); if(t) t.textContent=total;
+  function getPlayed(){try{return JSON.parse(localStorage.getItem('vb-ue-played')||'[]');}catch(e){return [];}}
+  function markPlayed(id){try{const p=getPlayed();if(p.indexOf(id)<0){p.push(id);localStorage.setItem('vb-ue-played',JSON.stringify(p));}}catch(e){}}
+  const rb=document.getElementById('resetBtn');
+  function refresh(){const p=getPlayed();box.querySelectorAll('.game-card').forEach(function(a){a.classList.toggle('played',p.indexOf(a.dataset.id)>=0);});rb.hidden=!p.length;}
+  box.addEventListener('click',function(e){const a=e.target.closest('.game-card');if(a&&!e.defaultPrevented)markPlayed(a.dataset.id);});
+  rb.addEventListener('click',function(){try{localStorage.removeItem('vb-ue-played');}catch(e){}refresh();});
+  window.addEventListener('pageshow',refresh);refresh();
+
+  const root=document.documentElement,pb=document.getElementById('animBtn');
+  function setAnim(off,save){root.classList.toggle('no-anim',off);pb.setAttribute('aria-pressed',off);pb.textContent=off?'▶ Ativar animações':'⏸ Pausar animações';if(save){try{localStorage.setItem('vb-anim',off?'off':'on');}catch(e){}}}
+  setAnim(root.classList.contains('no-anim'),false);
+  pb.addEventListener('click',function(){setAnim(!root.classList.contains('no-anim'),true);});
+
+  // navegadores sem <details name>: fecha as outras secções ao abrir uma
+  box.querySelectorAll('details.sec').forEach(function(d){d.addEventListener('toggle',function(){
+    if(d.open)box.querySelectorAll('details.sec[open]').forEach(function(o){if(o!==d)o.open=false;});
+  });});
+})();
 </script>
 </body>
 </html>
