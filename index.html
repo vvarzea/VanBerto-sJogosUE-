@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0d1840">
 <meta name="description" content="Jogos para conheceres os 27 países da União Europeia com o VanBerto's.">
 <link rel="manifest" href="manifest.webmanifest">
-<script>try{if(localStorage.getItem('vb-anim')==='off')document.documentElement.classList.add('no-anim');}catch(e){}</script>
+<script>try{localStorage.removeItem('vb-anim');}catch(e){}</script>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
@@ -27,9 +27,7 @@ body{
     radial-gradient(ellipse at 80% 70%,rgba(0,20,140,0.32) 0%,transparent 55%),
     radial-gradient(ellipse at 55% 10%,rgba(180,150,0,0.14) 0%,transparent 45%),
     linear-gradient(160deg,#02040f 0%,#04061a 40%,#060418 100%);
-  animation:bgPulse 8s ease-in-out infinite alternate;
 }
-@keyframes bgPulse{0%{filter:hue-rotate(0deg) brightness(1);}100%{filter:hue-rotate(12deg) brightness(1.06);}}
 body::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background-image:
@@ -48,14 +46,35 @@ body::before{
   animation:starsTwinkle 4s ease-in-out infinite alternate;
 }
 @keyframes starsTwinkle{0%{opacity:0.5;}50%{opacity:1;}100%{opacity:0.65;}}
-
-/* Estrelas UE flutuantes */
-.eu-star{position:fixed;font-size:11px;opacity:0;color:#FFD600;animation:euStarFloat linear infinite;pointer-events:none;}
-@media(max-width:360px){.eu-star{display:none;}}
-@keyframes euStarFloat{
-  0%{transform:translateY(0) rotate(0deg);opacity:0;}
-  10%{opacity:0.45;}90%{opacity:0.15;}
-  100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}
+/* pontinhos amarelos (UE) à volta do modal, fixos */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(3px 3px at 2% 10%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 5% 28%,#FFD600 55%,transparent 70%),
+    radial-gradient(3.5px 3.5px at 3% 46%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 6% 64%,#FFD600 55%,transparent 70%),
+    radial-gradient(3px 3px at 2% 82%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 5% 94%,#FFD600 55%,transparent 70%),
+    radial-gradient(2px 2px at 9% 16%,#FFD600 55%,transparent 70%),
+    radial-gradient(2px 2px at 8% 56%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 9% 76%,#FFD600 55%,transparent 70%),
+    radial-gradient(3px 3px at 98% 12%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 95% 30%,#FFD600 55%,transparent 70%),
+    radial-gradient(3.5px 3.5px at 97% 48%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 94% 66%,#FFD600 55%,transparent 70%),
+    radial-gradient(3px 3px at 98% 84%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 95% 95%,#FFD600 55%,transparent 70%),
+    radial-gradient(2px 2px at 91% 20%,#FFD600 55%,transparent 70%),
+    radial-gradient(2px 2px at 92% 58%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 91% 78%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 22% 3%,#FFD600 55%,transparent 70%),
+    radial-gradient(3px 3px at 40% 2%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 60% 3%,#FFD600 55%,transparent 70%),
+    radial-gradient(3px 3px at 78% 2%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 30% 97%,#FFD600 55%,transparent 70%),
+    radial-gradient(3px 3px at 50% 98%,#FFD600 55%,transparent 70%),
+    radial-gradient(2.5px 2.5px at 70% 97%,#FFD600 55%,transparent 70%);
 }
 
 /* ══════════ Central de Missões — União Europeia ══════════
@@ -76,9 +95,7 @@ body{
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none !important;transition:none !important;}
-  .eu-star{display:none !important;}
 }
-html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none !important;transition:none !important;}
 
 @keyframes vbFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
 @keyframes robotPop{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-18px) rotate(-6deg)}70%{transform:translateY(-8px) rotate(5deg)}}
@@ -104,9 +121,10 @@ html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none !impo
 /* ── CABEÇALHO ── */
 .modal-hero{
   flex:0 0 auto;position:relative;overflow:hidden;text-align:center;
-  background:linear-gradient(160deg,#0a1030,#060c28);
+  background:linear-gradient(160deg,#16307a,#0c1c52);
   border-bottom:3px solid var(--gold);
-  padding:min(2vh,20px) min(2.5vw,36px) min(1.4vh,14px);
+  padding:min(1.2vh,12px) 0 0;
+  display:flex;flex-direction:column;align-items:center;
 }
 .modal-hero::before{
   content:'';position:absolute;inset:0;pointer-events:none;
@@ -125,14 +143,22 @@ html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none !impo
     radial-gradient(1.5px 1.5px at 88% 18%,rgba(255,255,255,0.8),transparent);
   animation:starsTwinkle 4s ease-in-out infinite alternate;
 }
-.hero-map{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.hero-text{position:relative;z-index:1;flex:none;padding:0 min(2.5vw,36px) min(1vh,10px);}
+.hero-map{position:relative;flex:none;width:100%;height:clamp(110px,19vh,180px);order:1;pointer-events:none;overflow:hidden;}
+.hero-text{order:2;padding-top:min(.8vh,8px);}
+/* ecrã largo: texto ao lado do mapa (à esquerda); ecrã estreito: texto por baixo do mapa */
+@media(min-width:760px) and (min-height:501px){
+  .modal-hero{flex-direction:row;align-items:center;padding:0;}
+  .hero-text{order:1;flex:0 0 34%;padding:0 min(2vw,28px);}
+  .hero-map{order:2;flex:1 1 0;width:auto;height:clamp(130px,23vh,210px);}
+}
 #heroMapSvg{width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease;}
 
 /* Ícone da UE: 12 estrelas num círculo, com relevo */
 .eu-icon{
   position:relative;z-index:1;
-  width:clamp(40px,min(6vw,7vh),58px);height:clamp(40px,min(6vw,7vh),58px);
-  margin:0 auto min(.5vh,6px);
+  width:clamp(26px,min(3.6vw,4.6vh),38px);height:clamp(26px,min(3.6vw,4.6vh),38px);
+  margin:0 auto min(.5vh,6px);opacity:.75;
   filter:drop-shadow(0 4px 0 rgba(0,0,0,.65)) drop-shadow(0 0 10px rgba(255,214,0,.40));
   animation:heroBob 2.8s ease-in-out infinite;
 }
@@ -141,38 +167,20 @@ html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none !impo
 .modal-title{
   position:relative;z-index:1;
   font-family:'Fredoka One','Fredoka',cursive;font-weight:400;
-  font-size:clamp(24px,min(3.2vw,4.5vh),42px);line-height:1.15;
+  font-size:clamp(16px,min(2vw,3vh),26px);line-height:1.15;
   color:var(--gold);
-  text-shadow:0 3px 0 var(--ink),0 0 18px rgba(0,0,0,.55);
+  text-shadow:0 2px 6px rgba(0,0,0,.7);
   margin:0 0 2px;
   animation:titleIn .6s cubic-bezier(.34,1.56,.64,1) backwards;
 }
-.modal-title-sub{display:block;font-size:.62em;line-height:1.2;margin-top:2px;color:#fff;text-shadow:0 2px 0 var(--ink),0 0 12px rgba(0,0,0,.55);}
+.modal-title-sub{display:block;font-size:.7em;line-height:1.2;margin-top:2px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.7);}
 .modal-sub{
   position:relative;z-index:1;
-  color:#9cc4ff;font-size:clamp(12px,min(1vw,1.4vh),13px);
-  font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
-  margin-bottom:min(.9vh,9px);
+  color:#9cc4ff;font-size:clamp(10px,min(.85vw,1.2vh),12px);
+  font-weight:800;letter-spacing:1.1px;text-transform:uppercase;
+  margin-bottom:0;opacity:.9;
   text-shadow:0 1px 6px rgba(0,0,0,.8);
 }
-.hero-stats{
-  position:relative;z-index:1;
-  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
-  gap:clamp(4px,.8vw,12px);margin-bottom:min(.3vh,4px);
-}
-.stat-badge{
-  display:inline-flex;align-items:center;gap:4px;white-space:nowrap;
-  background:var(--sc,var(--gold));color:var(--ink);
-  border:2px solid var(--ink);border-radius:20px;box-shadow:0 2px 0 var(--ink);
-  padding:clamp(2px,.4vh,6px) clamp(8px,.9vw,14px);
-  font-family:'Fredoka One','Fredoka',cursive;font-weight:400;
-  font-size:clamp(12px,min(.9vw,1.3vh),13px);letter-spacing:.3px;
-  animation:cardIn .4s cubic-bezier(.34,1.56,.64,1) backwards;
-}
-.stat-badge:nth-child(1){animation-delay:.25s;}
-.stat-badge:nth-child(2){animation-delay:.32s;}
-.stat-badge:nth-child(3){animation-delay:.39s;}
-.stat-badge:nth-child(4){animation-delay:.46s;}
 
 /* ── LISTA DE JOGOS ── */
 .games-section{
@@ -409,26 +417,22 @@ html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none !impo
 }
 /* ecrã deitado baixo (telemóvel): cabeçalho mínimo */
 @media(max-height:500px){
-  .eu-icon,.hero-stats,.modal-sub{display:none;}
+  .eu-icon,.modal-sub,.hero-map{display:none;}
   .modal-hero{padding:6px 16px;}
+  .hero-text{padding:0;}
 }
 @media (hover:none){.game-card:hover,.sec>summary:hover{transform:none;}}
+
 </style>
 </head>
 <body>
 
-<div class="eu-star" style="left:8%;animation-duration:12s;animation-delay:0s;">★</div>
-<div class="eu-star" style="left:22%;animation-duration:18s;animation-delay:3s;">★</div>
-<div class="eu-star" style="left:38%;animation-duration:14s;animation-delay:6s;font-size:8px;">★</div>
-<div class="eu-star" style="left:55%;animation-duration:20s;animation-delay:1s;">★</div>
-<div class="eu-star" style="left:70%;animation-duration:16s;animation-delay:9s;font-size:9px;">★</div>
-<div class="eu-star" style="left:85%;animation-duration:11s;animation-delay:4s;">★</div>
 
 <div class="modal-wrap">
   <main class="card">
 
     <div class="modal-hero">
-      <div class="hero-map" aria-hidden="true"><svg id="heroMapSvg" xmlns="http://www.w3.org/2000/svg"></svg></div>
+      <div class="hero-text">
       <div class="eu-icon" aria-hidden="true"><svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="euBg" cx="50%" cy="40%" r="55%">
@@ -462,7 +466,8 @@ html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none !impo
         </svg></div>
       <h1 class="modal-title">Central de Missões do VanBerto's<span class="modal-title-sub">União Europeia</span></h1>
       <div class="modal-sub"><span id="total-a">10</span> jogos — escolhe a tua missão</div>
-      <div class="hero-stats"><span class="stat-badge" style="--sc:#FFD600;">🚂 Destaque</span><span class="stat-badge" style="--sc:#4d8dff;">🗺️ Exploração</span><span class="stat-badge" style="--sc:#ff8a3d;">🎮 Quiz & Palavras</span><span class="stat-badge" style="--sc:#2dd4bf;">🎨 Criativo</span></div>
+      </div>
+      <div class="hero-map" aria-hidden="true"><svg id="heroMapSvg" xmlns="http://www.w3.org/2000/svg"></svg></div>
     </div>
 
     <div class="games-section" id="games">
@@ -628,7 +633,7 @@ html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none !impo
 </svg></div><div class="game-info"><h3 class="game-name">Liga o Par</h3><div class="game-desc">Liga cada país à sua capital e forma todos os pares.</div><span class="game-tag">Países e capitais</span></div></a></div>
       </details>
       <details class="sec" name="sec" style="--sc:#ff8a3d;">
-        <summary><span class="sec-ico" aria-hidden="true">🎮</span><span class="sec-title">Quiz & Palavras</span><span class="section-count">2 jogos</span><span class="sec-arrow" aria-hidden="true">▼</span></summary>
+        <summary><span class="sec-ico" aria-hidden="true">🔤</span><span class="sec-title">Palavras</span><span class="section-count">2 jogos</span><span class="sec-arrow" aria-hidden="true">▼</span></summary>
         <div class="games-grid games-grid-2"><a class="game-card" data-id="cruzadas" href="https://vvarzea.github.io/VanBerto-s-UEPalavrasCruzadas/" rel="noopener" style="--gc:#FFD600;--gc-glow:rgba(255,214,0,0.35);--gt:#010617;"><div class="game-icon" aria-hidden="true"><svg class="card-icon" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="ig_cruz" x1="0" y1="0" x2="1" y2="1">
@@ -699,7 +704,6 @@ html.no-anim *,html.no-anim *::before,html.no-anim *::after{animation:none !impo
       <button type="button" class="install-btn" id="installBtn" hidden>📲 Instalar</button>
       <div class="install-help" id="installHelp" role="status" hidden>Para instalar no iPhone ou iPad: toca em <b>Partilhar</b> ⬆️ e depois em <b>Adicionar ao ecrã principal</b>.</div>
       <button type="button" class="reset-btn" id="resetBtn" hidden>↺ Recomeçar (limpar os ✓)</button>
-      <button type="button" class="reset-btn" id="animBtn" aria-pressed="false">⏸ Pausar animações</button>
     </div>
   </main>
   <div class="footer-vb" role="complementary" aria-label="Mascote VanBerto's">
@@ -1184,23 +1188,23 @@ const isEU = f => EU_IDS.has(String(f.id).padStart(3,'0'));
 async function drawHeroMap(){
   const svgEl = document.getElementById('heroMapSvg');
   if(!svgEl || typeof d3==='undefined' || typeof topojson==='undefined') return;
-  const hero = svgEl.closest('.modal-hero');
+  const hero = svgEl.closest('.hero-map');
   const W = hero.clientWidth || 600;
   const H = hero.clientHeight || 260;
   svgEl.setAttribute('width', W);
   svgEl.setAttribute('height', H);
   const svg = d3.select('#heroMapSvg');
   svg.selectAll('*').remove();
-  const proj = d3.geoMercator().center([14,47]).scale(Math.min(W*0.5,H*1.1)).translate([W*0.5,H*0.58]);
+  const proj = d3.geoMercator().center([14,52]).scale(Math.min(W*0.5,H*1.0)).translate([W*0.5,H*0.5]);
   const path = d3.geoPath().projection(proj);
   try {
     const world = window._worldData || await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json');
     window._worldData = world;
     const feats = euroFeatures(topojson.feature(world, world.objects.countries));
     svg.append('g').selectAll('path').data(feats.filter(f=>!isEU(f))).join('path')
-      .attr('d',path).attr('fill','rgba(255,255,255,0.07)').attr('stroke','rgba(255,255,255,0.22)').attr('stroke-width',0.6);
+      .attr('d',path).attr('fill','rgba(255,255,255,0.16)').attr('stroke','rgba(255,255,255,0.4)').attr('stroke-width',0.6);
     svg.append('g').selectAll('path').data(feats.filter(isEU)).join('path')
-      .attr('d',path).attr('fill','rgba(30,90,230,0.55)').attr('stroke','rgba(255,214,0,0.9)').attr('stroke-width',0.9).attr('stroke-linejoin','round');
+      .attr('d',path).attr('fill','rgba(255,214,0,0.95)').attr('stroke','#16307a').attr('stroke-width',0.7).attr('stroke-linejoin','round');
     svgEl.style.opacity = '1';
   } catch(e){ console.warn('Hero map error:', e); }
 }
@@ -1212,7 +1216,7 @@ window.addEventListener('load', () => {
 });
 let _rsT;const _redrawMap=()=>{clearTimeout(_rsT);_rsT=setTimeout(drawHeroMap,200);};
 window.addEventListener('resize',_redrawMap);
-if(window.ResizeObserver)new ResizeObserver(_redrawMap).observe(document.querySelector('.modal-hero'));
+if(window.ResizeObserver)new ResizeObserver(_redrawMap).observe(document.querySelector('.hero-map'));
 </script>
 <script>
 // ── VANBERTO'S ATUAL (rodapé) ─────────────────────────────────────────────
@@ -1436,7 +1440,7 @@ if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.a
 </script>
 
 <script>
-// ── Central de Missões: ✓ jogados, Recomeçar, Pausar animações, uma secção aberta de cada vez ──
+// ── Central de Missões: ✓ jogados, Recomeçar, uma secção aberta de cada vez ──
 (function(){
   const box=document.getElementById('games');
   const total=box.querySelectorAll('.game-card').length;
@@ -1449,10 +1453,6 @@ if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.a
   rb.addEventListener('click',function(){try{localStorage.removeItem('vb-ue-played');}catch(e){}refresh();});
   window.addEventListener('pageshow',refresh);refresh();
 
-  const root=document.documentElement,pb=document.getElementById('animBtn');
-  function setAnim(off,save){root.classList.toggle('no-anim',off);pb.setAttribute('aria-pressed',off);pb.textContent=off?'▶ Ativar animações':'⏸ Pausar animações';if(save){try{localStorage.setItem('vb-anim',off?'off':'on');}catch(e){}}}
-  setAnim(root.classList.contains('no-anim'),false);
-  pb.addEventListener('click',function(){setAnim(!root.classList.contains('no-anim'),true);});
 
   // navegadores sem <details name>: fecha as outras secções ao abrir uma
   box.querySelectorAll('details.sec').forEach(function(d){d.addEventListener('toggle',function(){
