@@ -1,4 +1,4 @@
-const CACHE='vanberto-ue-v11';
+const CACHE='vanberto-ue-v12';
 // Essenciais da própria página (se faltar um, a instalação falha).
 const CORE=['./','index.html','manifest.webmanifest','favicon.png','apple-touch-icon.png','icon-128.png','icon-192.png','icon-256.png','icon-512.png','icon-maskable-192.png','icon-maskable-512.png'];
 // Recursos externos do menu (fontes e mapa): guardados em melhor esforço, para o menu abrir também offline.
